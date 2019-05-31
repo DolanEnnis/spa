@@ -1,0 +1,7 @@
+<footer color="primary" fxLayout="row" fxLayoutAlign="space-evenly start" fxLayoutGap="10px">
+  <p><a class="footerLink" href="mailto:dolan.ennis@gmail.com">Email</a> Brian to change your login Name/Type: </p>
+  <p *ngIf="!isAuth">NOT LOGGED IN</p>
+  <p *ngIf="isAuth">Logged in as {{message}}</p>
+  <!-- <p *ngIf="isAuth">Logged in as {{patron.displayName|async}}/{{patron.userType|async}}</p>   -->
+  <p>Brian Dolan May 2019 (beta 0.2)</p>
+</footer>

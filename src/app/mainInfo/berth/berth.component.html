@@ -1,0 +1,32 @@
+<!-- Used for each port in Office View -->
+
+<h1>
+  {{ berth }}
+  <a href={{mtURL}} target="_blank"><img src="assets/marinetraffic-logo.png" alt="MT image" width="34" height="31"></a>
+</h1>
+
+<div *ngIf="noDue == 0; else due">No Ships are due to {{ berth }},</div>
+
+<ng-template #due>
+  <h3 class="due">
+    Due
+  </h3>
+  <app-berth-status [dataSourse]="dataSourceDue" [et]="eta"></app-berth-status>
+</ng-template>
+
+<div *ngIf="noWaiting !== 0">
+  <h3 class="arrivedShip">
+    Awaiting Berth
+  </h3>
+  <app-berth-status [dataSourse]="dataSourceWait" [et]="etb"></app-berth-status>
+</div>
+
+<div *ngIf="noAlongside == 0; else alongside">{{ berth }} has no ships alongside</div>
+
+
+<ng-template #alongside>
+  <h3 class="berthed">
+    Alongside
+  </h3>
+  <app-berth-status [dataSourse]="dataSourceAlong" [et]="ets"></app-berth-status>
+</ng-template>

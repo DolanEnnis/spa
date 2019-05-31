@@ -1,0 +1,93 @@
+<section class="new-ship" fxLayout="row">
+  <form fxLayout="column" fxFlexOffset="5" fxFlex="30" fxLayoutGap="10px" [formGroup]="newShipForm"
+    (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <input type="text" matInput placeholder="Ship's Name" formControlName="ship"
+        (keyup)="doFilter($event.target.value)">
+      <mat-error>A Ships name is required!</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input type="number" matInput placeholder="Gross" formControlName="gt">
+      <mat-error>A Gross Tonnage is required!</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input type="text" matInput placeholder="Ship Comment" formControlName="shipNote">
+
+    </mat-form-field>
+
+    <mat-form-field>
+      <input type="text" matInput placeholder="Marine Traffic URL" formControlName="marineTraffic">
+      <mat-error>Only Marine traffic URL allowed here!! </mat-error>
+
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select formControlName="port" placeholder="Port" name="port" required>
+        <mat-option *ngFor="let port of ports" [value]="port.value">
+          {{ port.viewValue }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input [owlDateTime]="dt" [owlDateTimeTrigger]="dt" type="eta" matInput placeholder="ETA/Arrived"
+        formControlName="eta">
+      <owl-date-time #dt></owl-date-time>
+      <mat-error>A due date is required!</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select formControlName="update" placeholder="Update From" name="update" required>
+        <mat-option *ngFor="let update of updates" [value]="update.value">
+          {{ update.viewValue }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+
+    <button type="submit" color="primary" mat-raised-button [disabled]="newShipForm.invalid">Submit</button>
+  </form>
+
+  <!-- End of entry form -->
+
+  <!-- Start of Previous visit listing -->
+  <div fxFlexOffset="10" fxFlex="60" fxLayoutGap="10px">
+    <a href="http://www.cargopro.ie/sfpc/download/rpt_daydiary.pdf" target="_blank">Open Day Diary</a>
+    <mat-table [dataSource]="dataSource" matSort matSortActive="ship" matSortDirection="desc">
+
+      <ng-container matColumnDef="eta">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Date</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.eta.seconds *1000 | date:"dd/MM/yy"  }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="ship">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.ship }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="gt">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>GT</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.gt }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="port">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Port</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.inward.port }}</mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="handleRowClick(row)"></mat-row>
+
+    </mat-table>
+    <mat-paginator #paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true">
+    </mat-paginator>
+    <mat-card>
+      <mat-card-content>
+        <p>Click on a previous ship to copy in its Name, GT, and Comments!</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</section>

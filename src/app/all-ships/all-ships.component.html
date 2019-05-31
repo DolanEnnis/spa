@@ -1,0 +1,23 @@
+<!-- This shows the "Previous" Page -->
+<div style="padding: 5px;">
+  <mat-tab-group mat-align-tabs="center">
+    <!--To Show inward Trips-->
+    <mat-tab label="In" fxLayoutAlign="center center">
+
+      <app-all-ships-in [dataSourse]="dataSourceIn" [direction]="in"></app-all-ships-in>
+
+
+    </mat-tab>
+
+    <!-- TO SHOW OUTWARD TRIPS -->
+    <mat-tab label="Out">
+      <app-all-ships-in [dataSourse]="dataSourceOut" [direction]="out"></app-all-ships-in>
+    </mat-tab>
+
+    <mat-tab label="{{message}}">
+      <app-pilot></app-pilot>
+    </mat-tab>
+
+
+  </mat-tab-group>
+</div>

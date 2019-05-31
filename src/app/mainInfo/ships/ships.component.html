@@ -1,0 +1,16 @@
+<!-- Used on the main landing page also known as Ships -->
+
+<h3 class="due">
+  Due
+</h3>
+<app-status-list [et]="eta" [status]="due"></app-status-list>
+
+<h3 class="arrivedShip">
+  Awaiting Berth
+</h3>
+<app-status-list [status]="waitingBerth" [et]="etb"></app-status-list>
+
+<h3 class="berthed">
+  Alongside
+</h3>
+<app-status-list [status]="alongside" [et]="ets"></app-status-list>

@@ -1,0 +1,54 @@
+<!-- <p>Used in Office Page </p> -->
+<mat-table [dataSource]="dataSource">
+
+
+  <ng-container matColumnDef="ship">
+    <mat-header-cell *matHeaderCellDef>Vessel Name</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{ element.ship}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="officeTime">
+    <mat-header-cell *matHeaderCellDef>{{et}}</mat-header-cell>
+    <mat-cell *matCellDef="let element" bind-style.color="element.boarded < visitService.today ? 'red':'black'">
+      <div *ngIf="element.boarded < future; else notBoarded">
+        {{ element.boarded * 1000 | date:"EE dd, HH:mm " }}
+      </div>
+      <ng-template #notBoarded>
+        No Info Yet!
+      </ng-template>
+    </mat-cell>
+  </ng-container>
+
+
+  <ng-container matColumnDef="note">
+    <mat-header-cell *matHeaderCellDef>Note</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{ element.note }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="pilot">
+    <mat-header-cell *matHeaderCellDef>Pilot</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{ element.pilot }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="updated">
+    <mat-header-cell *matHeaderCellDef>Updated</mat-header-cell>
+    <mat-cell class="updateInfo" *matCellDef="let element">
+      {{element.updateTime | amTimeAgo}} from {{element.visit.update}} by {{element.visit.updatedBy}} </mat-cell>
+  </ng-container>
+
+
+  <ng-container matColumnDef="mt">
+    <mat-header-cell *matHeaderCellDef>Marine Traffic</mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <div *ngIf="element.mt"><a href={{element.mt}} target="_blank"><img src="assets/mtsmall.png" alt="MT image"
+            width="54" height="21"></a></div>
+    </mat-cell>
+  </ng-container>
+
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="handleRowClick(row)">
+  </mat-row>
+
+
+</mat-table>

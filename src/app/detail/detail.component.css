@@ -1,0 +1,30 @@
+.example-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.example-container > * {
+  width: 100%;
+}
+
+.rhs-Container {
+  width: 100%;
+}
+
+.flag {
+  color: red;
+}
+
+/* .main-particulars{
+
+    border-bottom: 2px double #cdd0d6;
+} */
+
+/* .trip-particulars {
+  width: 100%;
+  border: 2px double #cdd0d6;
+}
+ */
+.updateInfo {
+  font-size: small;
+}

@@ -1,0 +1,12 @@
+
+
+.berthheader{
+    background-color:  #9ccfff
+}
+
+.mat-tab-label-active {
+    background-color: #5EADB0;
+    color: #D5FEFF;
+    border: 1px solid #6B7F7F;
+    font-weight: bold;
+}

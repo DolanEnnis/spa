@@ -1,0 +1,63 @@
+<div fxLayoutAlign="center center">
+  <mat-form-field fxFlex="40%">
+    <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Filter" />
+  </mat-form-field>
+</div>
+
+<mat-table [dataSource]="dataSource" matSort matSortActive="boarded" matSortDirection="desc">
+  <ng-container matColumnDef="boarded">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Date Boarded</mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <div *ngIf="element.boarded < today; else notBoarded">
+        {{ element.boarded * 1000 | date: "dd/MM/yy " }}
+      </div>
+      <ng-template #notBoarded>
+        Still to do!
+      </ng-template>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="ship">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Vessel Name</mat-header-cell>
+    <mat-cell *matCellDef="let element"><b>{{ element.ship}}</b></mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="gt">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>GT</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{ element.gt }}</mat-cell>
+  </ng-container>
+  <!-- displayedColumns = ['boarded', 'ship','gt','berth','monthNo','no','confirmed']; -->
+  <ng-container matColumnDef="berth">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Berth</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{ element.berth }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="monthNo">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Month No</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{ element.monthNo }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="no">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Pilot No</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{ element.no }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="inout">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>In / Out</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{ element.inout }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="confirmed">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Confirmed</mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <mat-checkbox [(ngModel)]="element.confirmed" (change)="outconfirm()"></mat-checkbox>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns" (click)="handleRowClick(row)"
+    [ngStyle]="{'background-color': getColor(row)}">
+  </mat-row>
+</mat-table>
+<mat-paginator #paginator [pageSize]="20" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true">
+</mat-paginator>

@@ -1,0 +1,40 @@
+<!--
+Goes into Detail Page twice for inward and outward trips
+       -->
+
+
+<div [formGroup]="tripForm" fxLayout="column" fxFlexOffset="5" class='container'>
+  <mat-form-field>
+    <input (dateTimeChange)="setupFlag($event)" [owlDateTime]="dt" [owlDateTimeTrigger]="dt" type="boarding" matInput
+      placeholder="Boarding" formControlName="boarding">
+    <owl-date-time #dt></owl-date-time>
+    <div class="flag" *ngIf="flag">Vessel Still {{status}}?</div>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select (selectionChange)="changePilot($event)" formControlName="pilot" placeholder="Pilot" name="pilot">
+      <mat-option *ngFor="let pilot of pilots" [value]="pilot.value">
+        {{ pilot.viewValue }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select formControlName="port" placeholder="Port" name="port">
+      <mat-option *ngFor="let port of ports" [value]="port.value">
+        {{ port.viewValue }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select formControlName="typeTrip" placeholder="Trip Type" name="typeTrip">
+      <mat-option *ngFor="let typeTrip of typeTrips" [value]="typeTrip.value">
+        {{ typeTrip.viewValue }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input type="text" matInput placeholder="Note" formControlName="note">
+  </mat-form-field>
+
+  <div *ngIf="pilotFlag">This works</div>
+</div>

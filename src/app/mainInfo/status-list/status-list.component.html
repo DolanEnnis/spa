@@ -1,0 +1,51 @@
+<mat-table [dataSource]="dataSource" matSort matSortActive="officeTime" matSortDirection="asc">
+
+
+  <ng-container matColumnDef="ship">
+    <mat-header-cell *matHeaderCellDef>Vessel Name</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{ element.ship}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="officeTime">
+    <mat-header-cell *matHeaderCellDef>{{et}}</mat-header-cell>
+    <mat-cell *matCellDef="let element"
+      bind-style.color="element.officeTime.seconds < visitService.today ? 'red':'black'">
+      {{ element.officeTime.seconds *1000 |  date :"EE dd, HH:mm " }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="port">
+    <mat-header-cell *matHeaderCellDef>Port</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{ element.berth }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="note">
+    <mat-header-cell *matHeaderCellDef>Note</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{ element.note }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="pilot">
+    <mat-header-cell *matHeaderCellDef>Pilot</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{ element.pilot }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="updated">
+    <mat-header-cell *matHeaderCellDef>Updated</mat-header-cell>
+    <mat-cell class="updateInfo" *matCellDef="let element">
+      {{element.updateTime | amTimeAgo}} from {{element.update}} by {{element.updatedBy}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="mt">
+    <mat-header-cell *matHeaderCellDef>Marine Traffic</mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <div *ngIf="element.marineTraffic"><a href={{element.marineTraffic}} target="_blank"><img src="assets/mtsmall.png"
+            alt="MT image" width="54" height="21"></a></div>
+    </mat-cell>
+  </ng-container>
+
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="handleRowClick(row)">
+  </mat-row>
+
+
+</mat-table>

@@ -8,8 +8,9 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { environment } from '../environments/environment';
 import { StoreModule } from '@ngrx/store';
 import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
-import { MomentModule } from 'angular2-moment';
-import { AngularDateTimePickerModule } from 'angular2-datetimepicker';
+import { MomentModule } from 'ngx-moment';
+//import { MomentModule } from 'angular2-moment';
+//import { AngularDateTimePickerModule } from 'angular2-datetimepicker';
 
 
 import { AuthModule } from './auth/auth.module';
@@ -79,7 +80,7 @@ import { reducers, metaReducers } from './reducers';
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     MomentModule,
-    AngularDateTimePickerModule,
+    // AngularDateTimePickerModule,
     StoreModule.forRoot(reducers, { metaReducers }),
   ],
   providers: [AuthService,

@@ -1,0 +1,51 @@
+<div *ngIf="!ownTrip">
+  <h1>Don't know how you got here but you really shouldn't have! Quick press the back button!</h1>
+</div>
+
+
+<div class="outer">
+  <div fxLayoutAlign="center center" *ngIf="ownTrip">
+    <mat-card class="example-card">
+
+      <h3 fxLayoutAlign="center center">{{trip.ship}}</h3>
+
+      <h4 fxLayoutAlign="center center" mat-line>({{trip.typeTrip}})</h4>
+
+      <table id="test">
+        <tr>
+          <td width="30%">Date: </td>
+          <td class="info" width="70%"> {{ trip.boarding  * 1000 | date:"dd/MM/yy "    }}</td>
+        </tr>
+        <tr>
+          <td>GT:</td>
+          <td class="info">{{trip.gt}}</td>
+        </tr>
+        <tr>
+          <td>Port: </td>
+          <td class="info">{{trip.port}}</td>
+        </tr>
+        <tr>
+          <td>Pilot: </td>
+          <td class="info">{{trip.pilot}}</td>
+        </tr>
+        <mat-divider></mat-divider>
+        <tr>
+          <td>Pilotage Charge: </td>
+          <td>€ {{trip.pilotageCharge}}</td>
+        </tr>
+        <tr>
+          <td>Berthing: </td>
+          <td>€ {{trip.berthing}}</td>
+        </tr>
+        <tr>
+          <td>Travel: </td>
+          <td>€ {{trip.travel}}</td>
+        </tr>
+        <tr>
+          <td>Incidental: </td>
+          <td>€ {{trip.incidental}}</td>
+        </tr>
+      </table>
+    </mat-card>
+  </div>
+</div>

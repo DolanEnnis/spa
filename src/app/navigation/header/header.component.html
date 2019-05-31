@@ -1,0 +1,48 @@
+<mat-toolbar color="primary">
+  <div fxHide.gt-xs>
+    <button mat-icon-button (click)="onToggleSidenav()" fxLayoutGap="15px">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+  <div>
+    <a routerLink="/">Shannon Pilots</a>
+  </div>
+  <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>
+    <ul fxLayout fxLayoutGap="13px" class="navigation-items">
+
+      <li *ngIf="!isAuth">
+        <a routerLink="/signup">Signup</a>
+      </li>
+      <li *ngIf="!isAuth">
+        <a routerLink="/login">Login</a>
+      </li>
+      <li *ngIf="isAuth">
+        <a routerLink="/new">New Ship</a>
+      </li>
+      <li><a href="http://www.cargopro.ie/sfpc/download/rpt_daydiary.pdf" target="_blank">Day Diary</a>
+      </li>
+      <li *ngIf="isAuth">
+        <!-- For a space -->
+      </li>
+      <li *ngIf="isAuth">
+        <a routerLink="/">Ships</a>
+      </li>
+      <li *ngIf="isAuth">
+        <a routerLink="/office">Office</a>
+      </li>
+      <li *ngIf="isAuth">
+        <!-- For a space -->
+      </li>
+      <li *ngIf="isAuth">
+        <a routerLink="/stationBook">Previous</a>
+      </li>
+
+      <li *ngIf="isAuth">
+        <!-- For a space -->
+      </li>
+      <li *ngIf="isAuth">
+        <a style="cursor: pointer" (click)="onLogout()">Logout</a>
+      </li>
+    </ul>
+  </div>
+</mat-toolbar>

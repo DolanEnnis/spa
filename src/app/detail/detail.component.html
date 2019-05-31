@@ -1,0 +1,111 @@
+<div class="example-container">
+  <form [formGroup]="shipForm" (ngSubmit)="onSubmit()" fxLayout="column"
+    [ngStyle]="{ 'background-color': statusColor }">
+    <mat-form-field fxLayoutAlign="center center" fxFlex="50">
+      <input type="text" matInput placeholder="Ship's Name" formControlName="ship" />
+      <mat-error>A Ships name is required!</mat-error>
+    </mat-form-field>
+
+
+
+    <div fxLayout="row" class="main-particulars">
+      <div fxLayout="column" fxFlex="40" fxFlexOffset="5" fxLayoutGap="10px">
+        <mat-form-field>
+          <input type="number" matInput placeholder="Gross" formControlName="gt" />
+          <mat-error>A Gross Tonnage is required!</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input [owlDateTime]="dt" [owlDateTimeTrigger]="dt" type="eta" matInput placeholder="ETA/Arrived"
+            formControlName="eta" />
+          <owl-date-time #dt></owl-date-time>
+          <mat-error>A due date is required!</mat-error>
+          <div class="flag" *ngIf="flagDue">Has she arrived?</div>
+        </mat-form-field>
+
+      </div>
+
+      <div fxFlex="40" fxFlexOffset="5" fxLayoutGap="10px">
+        <mat-form-field class="rhs-Container">
+          <div *ngIf="shipForm.value.marineTraffic">
+            <a href={{shipForm.value.marineTraffic}} target="_blank"><img src="assets/mtsmall.png" alt="MT image"
+                width="54" height="21"></a>
+          </div>
+          <input type="text" matInput placeholder="Marine Traffic URL " formControlName="marineTraffic" />
+
+        </mat-form-field>
+        <mat-form-field class="rhs-Container">
+          <input type="text" matInput placeholder="Ship Comment" formControlName="shipNote" />
+
+        </mat-form-field>
+      </div>
+    </div>
+    <!-- Start of trip info -->
+    <div fxLayout="row">
+      <div fxFlex="40" fxFlexOffset="7" fxLayoutGap="10px" class="trip-particulars">
+        <h3>Inward Trip</h3>
+        <app-trip-info [trip]="inward" [status]="status" (formReady)="formInitialized('inward', $event)"
+          (onNewPilot)="pilotDiff($event,'inward')">
+        </app-trip-info>
+      </div>
+
+      <div fxFlex="40" fxFlexOffset="7" fxLayoutGap="10px" class="trip-particulars">
+        <h3>Outward Trip</h3>
+        <app-trip-info [trip]="outward" [status]="status" (formReady)="formInitialized('outward', $event)"
+          (onNewPilot)="pilotDiff($event,'outward')">
+        </app-trip-info>
+      </div>
+    </div>
+    <!-- End of trip info -->
+
+    <div>
+      <div fxFlex="40" fxLayoutGap="10px" fxLayoutAlign="end center">
+        <mat-form-field>
+          <mat-select formControlName="update" placeholder="Update From" name="update" required>
+            <mat-option *ngFor="let update of updates" [value]="update.value">
+              {{ update.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div fxFlex="40" fxFlexOffset="5" fxLayoutGap="10px" fxLayoutAlign="end center">
+        <mat-form-field>
+          <mat-select (selectionChange)="changeStatus($event)" formControlName="status" placeholder="Status"
+            name="status" required>
+            <mat-option *ngFor="let status of statuss" [value]="status.value">
+              {{ status.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div fxLayoutAlign="center center">
+      <button type="submit" color="primary" mat-raised-button [disabled]="shipForm.invalid">
+        Submit
+      </button>
+    </div>
+
+    <div class="updateInfo" fxLayoutAlign="center center">
+      Last updated: {{ updated | amTimeAgo }} by {{ updatedBy }}
+    </div>
+
+    <!-- Information only for the Pilot of the ship -->
+    <div fxLayout="row">
+      <div fxFlex="40" fxFlexOffset="7" fxLayoutGap="10px" class="trip-particulars">
+        <h3 *ngIf="ownInwardTrip">Inward Trip Pilots Own Info</h3>
+        <app-trip-info-own *ngIf="ownInwardTrip" [trip]="inward" [visitdocId]="visitdocId"
+          (formReady)="formInitialized('ownInwardTrip', $event)" (confirming)="confirmIn($event)">
+        </app-trip-info-own>
+      </div>
+
+      <div fxFlex="40" fxFlexOffset="7" fxLayoutGap="10px" class="trip-particulars">
+        <h3 *ngIf="ownOutwardTrip">Outward Trip Pilots Own Info</h3>
+        <app-trip-info-own *ngIf="ownOutwardTrip" [trip]="outward" [visitdocId]="visitdocId"
+          (formReady)="formInitialized('ownOutwardTrip', $event)" (confirming)="confirmOut($event)">
+        </app-trip-info-own>
+      </div>
+    </div>
+  </form>
+</div>

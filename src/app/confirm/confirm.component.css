@@ -1,0 +1,20 @@
+.example-card {
+    width:50%;
+    background-color: #f4e9cd
+  }
+
+  .outer {
+    background-color: #9DBEBB;
+    tab-size: 16;
+  }
+
+  #test {
+    width: 80%
+  }
+
+.info {
+  font-weight: bold;
+}
+  #test td, #test th {
+    padding: 8px;
+  }

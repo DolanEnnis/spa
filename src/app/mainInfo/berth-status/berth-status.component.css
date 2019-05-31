@@ -1,0 +1,15 @@
+.due{
+    background-color:  #e6ffe6
+}
+
+.arrivedShip {
+    background-color: #e6e6ff;
+  }
+  
+  .berthed{
+    background-color: #ffffe6;
+  }
+
+  .updateInfo  {
+    font-size: 50%;
+}

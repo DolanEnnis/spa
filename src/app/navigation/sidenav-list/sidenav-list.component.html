@@ -1,0 +1,29 @@
+<mat-nav-list>
+  <a *ngIf="!isAuth" mat-list-item routerLink="/signup" (click)="onClose()">
+    <mat-icon>face</mat-icon>
+    <span class="nav-caption">Signup</span>
+  </a>
+  <a *ngIf="!isAuth" mat-list-item routerLink="/login" (click)="onClose()">
+    <mat-icon>input</mat-icon>
+    <span class="nav-caption">Login</span>
+  </a>
+  <a *ngIf="isAuth" mat-list-item routerLink="/" (click)="onClose()">
+    <span class="nav-caption">Ships</span>
+  </a>
+  <a href="http://www.cargopro.ie/sfpc/download/rpt_daydiary.pdf" target="_blank">
+    <span class="nav-caption">Day Diary</span>
+  </a>
+  <a *ngIf="isAuth" mat-list-item routerLink="/new" (click)="onClose()">
+    <span class="nav-caption">New Ships</span>
+  </a>
+  <a *ngIf="isAuth" mat-list-item routerLink="/stationBook" (click)="onClose()">
+    <span class="nav-caption">Station Book</span>
+  </a>
+  <a *ngIf="isAuth" mat-list-item routerLink="/" (click)="onClose()">
+    <span class="nav-caption">Ships</span>
+  </a>
+  <a *ngIf="isAuth" mat-list-item routerLink="/office" (click)="onClose()">
+    <span class="nav-caption">Office</span>
+  </a>
+  <a *ngIf="isAuth" mat-list-item (click)="onLogout()"><span class="nav-caption">Log Out</span></a>
+</mat-nav-list>

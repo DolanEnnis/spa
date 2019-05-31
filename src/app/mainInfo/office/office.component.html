@@ -1,0 +1,12 @@
+<div style="padding: 5px;">
+  <mat-tab-group>
+    <mat-tab *ngFor="let tab of tablists" label="{{ tab }}">
+      <app-berth
+        [berth]="tab"
+        [tripsDue$]="tripsDue$"
+        [tripsWaiting$]="tripsWaiting$"
+        [tripsAlongside$]="tripsAlongside$"
+      ></app-berth>
+    </mat-tab>
+  </mat-tab-group>
+</div>
