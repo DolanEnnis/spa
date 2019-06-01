@@ -19,7 +19,7 @@ import {
   AngularFirestoreDocument,
 } from 'angularfire2/firestore';
 
-import { VisitService } from '../shared/visit.service';
+import { VisitService } from '../services/visit.service';
 import { Visit } from '../shared/visit.model';
 import { Subscription, Observable } from 'rxjs';
 import { DateTimeAdapter } from 'ng-pick-datetime';
@@ -51,6 +51,8 @@ export class DetailComponent implements OnInit, OnDestroy {
   ownOutwardTrip: boolean;
   private patron: Patron;
   public flagDue: boolean = false;
+  public inConfirmed: boolean;
+  public outConfirmed: boolean;
 
   updates = [
     { value: 'Sheet', viewValue: 'Sheet' },
@@ -103,6 +105,8 @@ export class DetailComponent implements OnInit, OnDestroy {
       this.updated = d.updateTime;
       this.updatedBy = d.updatedBy;
       this.status = d.status;
+      this.inConfirmed = d.inwardConfirmed;
+      this.outConfirmed = d.outwardConfirmed;
     });
     this.setFlag(this.shipForm.value);
     this.statusColor = this.getColor();

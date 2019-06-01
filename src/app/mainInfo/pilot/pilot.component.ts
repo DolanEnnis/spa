@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
-import { VisitService } from '../../shared/visit.service';
+import { VisitService } from '../../services/visit.service';
 import { Visit } from '../../shared/visit.model';
 import { AuthService } from '../../auth/auth.service';
 import { Patron } from '../../shared/patron.model';
@@ -70,7 +70,7 @@ export class PilotComponent implements OnInit, AfterViewInit, OnDestroy {
               monthNo: visit.inward.monthNo,
               no: visit.inward.pilotNo,
               docid: visit.docid,
-              confirmed: visit.inward.confirmed,
+              confirmed: visit.inwardConfirmed,
               inout: 'in',
             };
           });
@@ -88,7 +88,7 @@ export class PilotComponent implements OnInit, AfterViewInit, OnDestroy {
               monthNo: visit.outward.monthNo,
               no: visit.outward.pilotNo,
               docid: visit.docid,
-              confirmed: visit.outward.confirmed,
+              confirmed: visit.outwardConfirmed,
               inout: 'out',
             };
           });

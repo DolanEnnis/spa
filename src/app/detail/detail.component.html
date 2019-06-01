@@ -44,6 +44,7 @@
     <div fxLayout="row">
       <div fxFlex="40" fxFlexOffset="7" fxLayoutGap="10px" class="trip-particulars">
         <h3>Inward Trip</h3>
+        <h4 *ngIf="inConfirmed">Confirmed</h4>
         <app-trip-info [trip]="inward" [status]="status" (formReady)="formInitialized('inward', $event)"
           (onNewPilot)="pilotDiff($event,'inward')">
         </app-trip-info>
@@ -51,6 +52,7 @@
 
       <div fxFlex="40" fxFlexOffset="7" fxLayoutGap="10px" class="trip-particulars">
         <h3>Outward Trip</h3>
+        <h4 *ngIf="outConfirmed">Confirmed</h4>
         <app-trip-info [trip]="outward" [status]="status" (formReady)="formInitialized('outward', $event)"
           (onNewPilot)="pilotDiff($event,'outward')">
         </app-trip-info>

@@ -6,13 +6,14 @@ import {
 
 import { Subject } from 'rxjs/Subject';
 import { Observable, Subscription, BehaviorSubject } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
 import { now } from 'moment';
 
 import { AuthService } from '../auth/auth.service';
-import { DataService } from '../shared/data.service';
+import { DataService } from './data.service';
 
-import { Visit } from './visit.model';
-import { Trip } from './trip.model';
+import { Visit } from '../shared/visit.model';
+import { Trip } from '../shared/trip.model';
 import { error } from 'util';
 import { Timestamp } from '@firebase/firestore-types';
 import { filter } from 'rxjs/operators';
@@ -31,6 +32,8 @@ export class VisitService implements OnInit, OnDestroy {
   public pilotFlag: boolean = false;
 
   constructor(
+    private route: ActivatedRoute,
+    private router: Router,
     private db: AngularFirestore,
     private authService: AuthService,
     private data: DataService
@@ -63,7 +66,7 @@ export class VisitService implements OnInit, OnDestroy {
   }
 
   setNewVisit(info) {
-    console.log(this.getUseruid());
+    console.log("Setting new Visit " + this.getUseruid());
     (this.visit = {
       ship: this.formatShipName(info.ship),
       gt: info.gt,
@@ -121,6 +124,28 @@ export class VisitService implements OnInit, OnDestroy {
         .update(this.visit)
         .then(() => console.log('Document successfully written!'))
         .catch(() => console.error('Error writing document: ', error));;
+  }
+
+  updateConfirmed(docRef, tripDirection) {
+    if (tripDirection == "i") {
+      console.log("hi " + tripDirection)
+      this.db
+        .collection('visits')
+        .doc(docRef)
+        .update({ "inwardConfirmed": true })
+        //for some reason in changing inward.submitted cleared outward.submitted
+        .then(() => this.router.navigate(['stationBook']))
+        .catch(() => console.error('Error writing document: ', error));;
+    }
+    else if (tripDirection == "o") {
+      console.log("hi " + tripDirection)
+      this.db
+        .collection('visits')
+        .doc(docRef)
+        .update({ "outwardConfirmed": true })
+        .then(() => this.router.navigate(['stationBook']))
+        .catch(() => console.error('Error writing document: ', error));;
+    }
   }
 
   formatShipName(name) {

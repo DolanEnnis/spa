@@ -1,4 +1,4 @@
-import { Injectable,OnInit } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -7,41 +7,40 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import 'rxjs/add/operator/switchMap'
 
 import { Observable } from 'rxjs/Observable';
-import { DataService } from "../shared/data.service";
+import { DataService } from "../services/data.service";
 
 
 //import { User } from './user.model';
 import { AuthData } from './auth-data.model';
-import { UIService } from '../shared/ui.service';
+import { UIService } from '../services/ui.service';
 import * as fromApp from '../app.reducer';
-import {Patron} from '../shared/patron.model';
+import { Patron } from '../shared/patron.model';
 
 interface User {
-  email:string;
+  email: string;
   userId: string;
 }
 
 @Injectable()
 export class AuthService implements OnInit {
-  message:string;
+  message: string;
   newPatron: Patron;
   user: Observable<User>;
   authChange = new Subject<boolean>();
   private isAuthenticated = false;
-  private currentPatron:Patron;
+  private currentPatron: Patron;
 
-  constructor(private router: Router, 
-              private afAuth: AngularFireAuth,
-              private uiService: UIService,
-              private afs: AngularFirestore,
-              private data: DataService,
-              private store: Store<{ui: fromApp.State, }>
-            ) 
-            {      }
+  constructor(private router: Router,
+    private afAuth: AngularFireAuth,
+    private uiService: UIService,
+    private afs: AngularFirestore,
+    private data: DataService,
+    private store: Store<{ ui: fromApp.State, }>
+  ) { }
 
   ngOnInit() {
-              this.data.currentMessage.subscribe(message => this.message = message);
-            }
+    this.data.currentMessage.subscribe(message => this.message = message);
+  }
 
 
   initAuthListener() {
@@ -55,15 +54,15 @@ export class AuthService implements OnInit {
         this.authChange.next(false);
         this.router.navigate(['/login']);
         this.isAuthenticated = false;
-        }
-      });
-    }
+      }
+    });
+  }
 
 
 
   registerUser(authData: AuthData) {
-    this.store.dispatch({type:'START_LOADING'});
-   
+    this.store.dispatch({ type: 'START_LOADING' });
+
     this.afAuth.auth
       .createUserWithEmailAndPassword(authData.email, authData.password)
       .then((credential) => {
@@ -76,27 +75,27 @@ export class AuthService implements OnInit {
         }
         console.log(this.newPatron);
         this.afs.collection('users').add(this.newPatron);
-       // this.updateUserData(credential.user);
-        this.store.dispatch({type:'STOP_LOADING'});
+        // this.updateUserData(credential.user);
+        this.store.dispatch({ type: 'STOP_LOADING' });
       })
       .catch(error => {
-        this.store.dispatch({type:'STOP_LOADING'});
-        this.uiService.showSnackbar(error.message,null, 3000,);
+        this.store.dispatch({ type: 'STOP_LOADING' });
+        this.uiService.showSnackbar(error.message, null, 3000);
       });
   }
 
 
   login(authData: AuthData) {
-    this.store.dispatch({type:'START_LOADING'});
+    this.store.dispatch({ type: 'START_LOADING' });
     //this.uiService.loadingStateChanged.next(true);
     this.afAuth.auth
       .signInWithEmailAndPassword(authData.email, authData.password)
       .then((returneddata) => {
-        this.store.dispatch({type:'STOP_LOADING'});
+        this.store.dispatch({ type: 'STOP_LOADING' });
       })
       .catch(error => {
-        this.store.dispatch({type:'STOP_LOADING'});
-        this.uiService.showSnackbar(error.message,null, 30000,);
+        this.store.dispatch({ type: 'STOP_LOADING' });
+        this.uiService.showSnackbar(error.message, null, 30000);
       })
   }
 
@@ -104,7 +103,7 @@ export class AuthService implements OnInit {
     this.afAuth.auth.signOut();
   }
 
-  getUseruid(){
+  getUseruid() {
     return this.currentPatron.uid
   }
 
@@ -113,22 +112,22 @@ export class AuthService implements OnInit {
   }
 
   private getUserData(uid) {
-     var docRef = this.afs.collection("users");
-     docRef.valueChanges().subscribe((patrons:Patron[])=>{
-       for(let person of patrons){
-         if (uid==person.uid){
-           this.currentPatron=person;
-           this.data.changeMessage(person.displayName);
-         }
-       }
-       
-     },error =>{
+    var docRef = this.afs.collection("users");
+    docRef.valueChanges().subscribe((patrons: Patron[]) => {
+      for (let person of patrons) {
+        if (uid == person.uid) {
+          this.currentPatron = person;
+          this.data.changeMessage(person.displayName);
+        }
+      }
+
+    }, error => {
       console.log(error);
-   }); 
-   
+    });
+
   }
 
-  getUser(){
+  getUser() {
     return this.currentPatron
   }
 

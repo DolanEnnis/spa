@@ -5,7 +5,7 @@ import { MatTableDataSource, MatSort } from '@angular/material';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
-import { VisitService } from '../../shared/visit.service';
+import { VisitService } from '../../services/visit.service';
 import { Visit } from '../../shared/visit.model';
 import { ViewInfo } from '../../shared/view.model'
 

@@ -48,7 +48,5 @@ export class TripInfoOwnComponent implements OnInit {
 
   confirm(): void {
     this.confirming.emit(this.trip.typeTrip);
-
-
   }
 }

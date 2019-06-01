@@ -4,7 +4,7 @@
 import { Component, Output, EventEmitter, Input, OnInit, OnChanges, SimpleChange } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Trip } from '../shared/trip.model';
-import { VisitService } from '../shared/visit.service';
+import { VisitService } from '../services/visit.service';
 import * as moment from 'moment';
 
 

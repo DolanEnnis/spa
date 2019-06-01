@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 //import { Subject } from 'rxjs/Subject';
 import { now } from 'moment';
 
-import { VisitService } from '../../shared/visit.service';
+import { VisitService } from '../../services/visit.service';
 import { Visit } from '../../shared/visit.model'
 
 @Component({

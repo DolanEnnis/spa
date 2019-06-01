@@ -14,15 +14,15 @@ import { MomentModule } from 'ngx-moment';
 
 
 import { AuthModule } from './auth/auth.module';
-import { UIService } from './shared/ui.service';
-import { VisitService } from './shared/visit.service';
+import { UIService } from './services/ui.service';
+import { VisitService } from './services/visit.service';
 
 import { HeaderComponent } from './navigation/header/header.component';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
 import { MaterialModule } from './material.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthService } from './auth/auth.service';
-import { DataService } from './shared/data.service';
+import { DataService } from './services/data.service';
 import { AppComponent } from './app.component';
 import { FooterComponent } from './footer/footer.component';
 import { ShipsComponent } from './mainInfo/ships/ships.component';

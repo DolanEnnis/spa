@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import {Patron} from './patron.model'
+import { Patron } from '../shared/patron.model'
 @Injectable()
 export class DataService {
 
@@ -12,7 +12,7 @@ export class DataService {
 
   changeMessage(message: string) {
     this.messageSource.next(message);
-    
+
   }
 
 }

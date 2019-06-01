@@ -28,6 +28,7 @@
           <td>Pilot: </td>
           <td class="info">{{trip.pilot}}</td>
         </tr>
+
         <mat-divider></mat-divider>
         <tr>
           <td>Pilotage Charge: </td>
@@ -46,6 +47,13 @@
           <td>€ {{trip.incidental}}</td>
         </tr>
       </table>
+      <div class="flex-container">
+        <button (click)="goBack()" mat-raised-button color="primary">Need a little more Editing</button>
+        <p>Once confirmed trip can only be edited by going to spreadsheet!!</p>
+        <h4 *ngIf="confirmed">Sorry only can Confirm a trip once</h4>
+        <button *ngIf="!confirmed" (click)="confirm()" mat-raised-button><b>CONFIRM</b></button>
+      </div>
+
     </mat-card>
   </div>
 </div>

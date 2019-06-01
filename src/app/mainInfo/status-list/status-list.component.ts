@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { Subject } from 'rxjs/Subject';
 
-import { VisitService } from '../../shared/visit.service';
+import { VisitService } from '../../services/visit.service';
 import { Visit } from '../../shared/visit.model'
 /* import { AuthService } from '../../auth/auth.service';
 import { DataService } from "../../shared/data.service"; */

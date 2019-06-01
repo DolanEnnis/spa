@@ -1,11 +1,11 @@
-import { Component, OnInit} from '@angular/core';
-import {FormGroup, FormControl, Validators} from '@angular/forms';
-import {Subscription, Observable} from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Subscription, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import {map} from 'rxjs/operators' ;
+import { map } from 'rxjs/operators';
 
 import { AuthService } from '../auth.service';
-import { UIService } from '../../shared/ui.service';
+import { UIService } from '../../services/ui.service';
 import * as fromApp from '../../app.reducer';
 
 @Component({
@@ -16,14 +16,14 @@ import * as fromApp from '../../app.reducer';
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
-  isLoading$ : Observable<boolean>;
+  isLoading$: Observable<boolean>;
 
-  private loadingSubs : Subscription;
+  private loadingSubs: Subscription;
 
   constructor(
-    private authService: AuthService, 
+    private authService: AuthService,
     private uiService: UIService,
-    private store: Store<{ui: fromApp.State }>,
+    private store: Store<{ ui: fromApp.State }>,
   ) { }
 
   ngOnInit() {
@@ -33,10 +33,10 @@ export class LoginComponent implements OnInit {
     // {this.isLoading = isLoading;
     // });
     this.loginForm = new FormGroup({
-      email: new FormControl('',{
-        validators: [Validators.required,Validators.email]
+      email: new FormControl('', {
+        validators: [Validators.required, Validators.email]
       }),
-      password: new FormControl('',{validators: [Validators.required]})
+      password: new FormControl('', { validators: [Validators.required] })
     })
   }
 

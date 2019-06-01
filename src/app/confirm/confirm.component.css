@@ -18,3 +18,14 @@
   #test td, #test th {
     padding: 8px;
   }
+
+  .flex-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+.mine{
+  background-color: #9DBEBB
+}

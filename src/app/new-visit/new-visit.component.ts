@@ -5,7 +5,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { DateTimeAdapter } from 'ng-pick-datetime';
 
-import { VisitService } from '../shared/visit.service';
+import { VisitService } from '../services/visit.service';
 import { ValidateUrl } from '../shared/marineTraffic.validator';
 import { Router } from '@angular/router';
 

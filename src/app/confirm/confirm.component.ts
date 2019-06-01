@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import {
+/* import {
   FormGroup,
   Validators,
   FormBuilder,
-} from '@angular/forms';
+} from '@angular/forms'; */
 import { Location, formatDate } from '@angular/common';
 import { Subscription, Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -11,7 +11,7 @@ import {
   AngularFirestore,
   AngularFirestoreDocument,
 } from 'angularfire2/firestore';
-import { VisitService } from '../shared/visit.service';
+import { VisitService } from '../services/visit.service';
 import { AuthService } from '../auth/auth.service';
 import { Patron } from '../shared/patron.model';
 import { submittedTrip } from '../shared/submittedTrip.model';
@@ -22,22 +22,25 @@ import { submittedTrip } from '../shared/submittedTrip.model';
   styleUrls: ['./confirm.component.css']
 })
 export class ConfirmComponent implements OnInit, OnDestroy {
+  id: string;
   visitdocId: string;
   visitDoc: AngularFirestoreDocument<submittedTrip>;
   subscription: Subscription;
   public updated = new Date();
   public updatedBy;
   private patron: Patron;
-  tripForm: FormGroup;
+  //tripForm: FormGroup;
   trip: submittedTrip = { ship: "" };
   // ship: string;
   ownTrip: boolean;
   tripDirection: string;
+  public confirmed: boolean;
+
 
 
 
   constructor(
-    private fb: FormBuilder,
+    //private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     //private db: AngularFirestore,
@@ -45,8 +48,9 @@ export class ConfirmComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private _location: Location,
   ) {
-    this.visitdocId = this.route.snapshot.params['id'];
-    this.tripDirection = this.visitdocId[this.visitdocId.length - 1];
+    this.id = this.route.snapshot.params['id'];
+    this.tripDirection = this.id[this.id.length - 1];
+    this.visitdocId = this.id.substring(0, this.id.length - 1);
   }
 
   ngOnInit() {
@@ -58,21 +62,22 @@ export class ConfirmComponent implements OnInit, OnDestroy {
       if (this.tripDirection == 'i') {
         //INWARD TRIP
         this.trip.boarding = this.visitService.getBoarded(d.inward.boarding);
-        this.trip.typeTrip = "inward";
+        this.trip.typeTrip = "Inward";
         this.trip.extra = d.inward.extra;
         this.trip.pilot = d.inward.pilot;
         this.trip.port = d.inward.port;
+        this.confirmed = d.inwardConfirmed;
       }
       else {
         //OUTWARD TRIP
         this.trip.boarding = this.visitService.getBoarded(d.outward.boarding);
-        this.trip.typeTrip = "outward";
+        this.trip.typeTrip = "Outward";
         this.trip.extra = d.outward.extra;
         this.trip.note = d.outward.note;
         this.trip.pilot = d.outward.pilot;
         this.trip.port = d.outward.port;
+        this.confirmed = d.outwardConfirmed;
       }
-      console.log("hi2" + this.trip.port)
       this.trip.berthing = this.berthing(this.trip.gt, this.trip.port);
       this.trip.pilotageCharge = this.pilotCharge(this.trip.gt, this.trip.port);
       this.trip.incidental = 8.37;
@@ -165,11 +170,17 @@ export class ConfirmComponent implements OnInit, OnDestroy {
     return berthing
   }
 
-  formInitialized(name: string, form: FormGroup) {
-    this.tripForm.setControl(name, form);
+  /*   formInitialized(name: string, form: FormGroup) {
+      this.tripForm.setControl(name, form);
+    } */
+  confirm() {
+    console.log("We will confirm all " + this.tripDirection);
+    this.visitService.updateConfirmed(this.visitdocId, this.tripDirection);
   }
 
-
+  goBack() {
+    this._location.back();
+  }
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }

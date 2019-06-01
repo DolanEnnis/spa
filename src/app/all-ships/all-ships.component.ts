@@ -9,11 +9,11 @@ import { now } from 'moment';
 //import { AngularFirestore } from 'angularfire2/firestore';
 //import { Subject } from 'rxjs/Subject';
 
-
-import { VisitService } from '../shared/visit.service';
+import { AuthService } from '../auth/auth.service';
+import { VisitService } from '../services/visit.service';
 import { Visit } from '../shared/visit.model'
 import { ViewInfo } from '../shared/view.model'
-import { DataService } from '../shared/data.service';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-all-ships',
@@ -29,11 +29,13 @@ export class AllShipsComponent implements OnInit, OnDestroy {
   in: string;
   out: string;
   message: string; //Who is logged on?
-
+  isUserPilot: boolean;
+  pilots = ['Fergal', 'Brian', 'Peter', 'Fintan', 'Mark', 'Dave', 'Paddy', 'Cyril']
   //private loggedinUserID: string;
 
 
   constructor(
+    private authService: AuthService,
     private visitService: VisitService,
     private data: DataService
     // private router: Router
@@ -86,6 +88,8 @@ export class AllShipsComponent implements OnInit, OnDestroy {
         //filter out all outward ships without boarding time
       });
     this.visitService.fetchVisits();
+    // find out if user is pilot
+    this.isUserPilot = (this.pilots.includes(this.message))
   }
 
   delay(ms: number) {
