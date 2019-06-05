@@ -65,7 +65,7 @@ export class DetailComponent implements OnInit, OnDestroy {
 
   statuss = [
     { value: 'Due', viewValue: 'Due' },
-    { value: 'Waiting Berth', viewValue: 'Waiting Berth' },
+    { value: 'Awaiting Berth', viewValue: 'Awaiting Berth' },
     { value: 'Alongside', viewValue: 'Alongside' },
     { value: 'Sailed', viewValue: 'Sailed' },
   ]; //statuss spelt wrong because what is plural of status?

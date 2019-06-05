@@ -15,6 +15,7 @@ import { VisitService } from '../services/visit.service';
 import { AuthService } from '../auth/auth.service';
 import { Patron } from '../shared/patron.model';
 import { submittedTrip } from '../shared/submittedTrip.model';
+import { RatesService } from '../services/rates.service';
 
 @Component({
   selector: 'app-confirm',
@@ -47,6 +48,7 @@ export class ConfirmComponent implements OnInit, OnDestroy {
     private visitService: VisitService,
     private authService: AuthService,
     private _location: Location,
+    private ratesService: RatesService,
   ) {
     this.id = this.route.snapshot.params['id'];
     this.tripDirection = this.id[this.id.length - 1];
@@ -78,97 +80,14 @@ export class ConfirmComponent implements OnInit, OnDestroy {
         this.trip.port = d.outward.port;
         this.confirmed = d.outwardConfirmed;
       }
-      this.trip.berthing = this.berthing(this.trip.gt, this.trip.port);
-      this.trip.pilotageCharge = this.pilotCharge(this.trip.gt, this.trip.port);
-      this.trip.incidental = 8.37;
-      this.trip.travel = 114.46;
+      this.trip.berthing = this.ratesService.berthing(this.trip.gt, this.trip.port);
+      this.trip.pilotageCharge = this.ratesService.pilotCharge(this.trip.gt, this.trip.port);
+      this.trip.incidental = this.ratesService.incidental;
+      this.trip.travel = this.ratesService.travel;
     });
     this.ownTrip = (this.trip.pilot == this.patron.displayName);
   }
 
-  pilotCharge(gt, port) {
-    // Pilot Rates
-    const cappa = 83.53;
-    const mpMin = 379.10;
-    const mprate = 0.0491;
-    let charge: number;
-    switch (port) {
-      case 'Anchorage':
-        charge = 0;
-        break;
-      case 'Cappa':
-        charge = cappa;
-        break;
-      case 'Moneypoint':
-        charge = mprate * gt;
-        if (charge < mpMin) { charge = mpMin }
-        break;
-    }
-    return charge;
-  }
-  /*  'Moneypoint' | 'Tarbert' | 'Foynes' | 'Aughinish' | 'Shannon' | 'Limerick' */
-
-  berthing(gt: number, port: string) {
-    console.log("hi" + port)
-    let berthing: number;
-    if (port == "Anchorage") {
-
-      if (gt > 85000) {
-        berthing = 273.27
-      }
-      else if (gt > 65000) {
-        berthing = 248.62
-      }
-      else if (gt > 50000) {
-        berthing = 227.91
-      }
-      else if (gt > 35000) {
-        berthing = 207.18
-      }
-      else if (gt > 25000) {
-        berthing = 186.46
-      }
-      else if (gt > 16000) {
-        berthing = 165.74
-      }
-      else if (gt > 8000) {
-        berthing = 145.07
-      }
-      else {
-        berthing = 82.86
-      }
-    }
-    else {
-      if (gt > 100000) {
-        berthing = 269.71
-      }
-      else if (gt > 70000) {
-        berthing = 248.62
-      }
-      else if (gt > 60000) {
-        berthing = 198.89
-      }
-      else if (gt > 50000) {
-        berthing = 151.23
-      }
-      else if (gt > 30000) {
-        berthing = 122.23
-      }
-      else if (gt > 15000) {
-        berthing = 87.01
-      }
-      else if (gt > 5000) {
-        berthing = 58
-      }
-      else if (gt > 1500 || port == 'Foynes') {
-        berthing = 38.33
-      }
-      else {
-        berthing = 29
-      }
-    }
-    return berthing
-  }
 
   /*   formInitialized(name: string, form: FormGroup) {
       this.tripForm.setControl(name, form);

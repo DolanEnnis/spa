@@ -26,7 +26,7 @@ export class OfficeComponent implements OnInit {
       ref.where('status', '==', "Due"))
       .valueChanges());
     this.tripsWaiting$ = (this.db.collection('visits', ref =>
-      ref.where('status', '==', "Waiting Berth"))
+      ref.where('status', '==', "Awaiting Berth"))
       .valueChanges());
     this.tripsAlongside$ = (this.db.collection('visits', ref =>
       ref.where('status', '==', "Alongside"))

@@ -95,7 +95,7 @@ export class TripInfoComponent implements OnInit, OnChanges {
   setFlag(boarding: moment.Moment, status: string) {
     if (boarding) {
       if ((boarding).isBefore(moment.now())) {
-        if ((status == "Waiting Berth" && this.trip.typeTrip == "inward") ||
+        if ((status == "Awaiting Berth" && this.trip.typeTrip == "inward") ||
           (status == "Alongside" && this.trip.typeTrip == "outward")) {
           this.flag = true
         }

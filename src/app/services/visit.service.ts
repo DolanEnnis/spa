@@ -42,9 +42,15 @@ export class VisitService implements OnInit, OnDestroy {
     this.fbSubs.push(
       this.data.currentMessage.subscribe(message => (this.message = message))
     );
+    //testing 
+    this.db
+      .collection('visits', ref => ref.where('status', '<', 'Sailed'))
+      .valueChanges()
+      .subscribe(val => console.log(val));
   }
 
   ngOnInit() {
+
   }
 
 
@@ -211,7 +217,7 @@ export class VisitService implements OnInit, OnDestroy {
         }
         return info.eta;
       }
-      case 'Waiting Berth': {
+      case 'Awaiting Berth': {
         info.berth = info.inward.port;
         if (!info.inward.boarding) {
           return 'No Info';
@@ -244,7 +250,7 @@ export class VisitService implements OnInit, OnDestroy {
     switch (status) {
       case 'Due':
         return '#e6ffe6';
-      case 'Waiting Berth':
+      case 'Awaiting Berth':
         return '#e6e6ff';
       case 'Alongside':
         return '#ffffe6';

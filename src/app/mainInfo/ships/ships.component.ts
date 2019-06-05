@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ShipsComponent implements OnInit {
   due = "Due";
-  waitingBerth = "Waiting Berth";
+  awaitingBerth = "Awaiting Berth";
   alongside = "Alongside";
   eta = "ETA";
   etb = "ETB";

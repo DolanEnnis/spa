@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.isLoading$ = this.store.pipe(map(state => state.ui.isLoading));
+    //this.isLoading$ = this.store.pipe(map(state => state.ui.isLoading));
     //this.isLoading$ = this.store.map(state => state.ui.isLoading);
     // this.loadingSubs = this.uiService.loadingStateChanged.subscribe(isLoading =>
     // {this.isLoading = isLoading;

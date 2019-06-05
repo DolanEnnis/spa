@@ -23,7 +23,7 @@ export interface ViewInfo {
     | 'Paddy'
     | 'Cyril'
     | null;
-    status: 'Due' | 'Waiting Berth' | 'Alongside' | 'Sailed' | null;
+    status: 'Due' | 'Awaiting Berth' | 'Alongside' | 'Sailed' | null;
     berth:
     | 'Anchorage'
     | 'Cappa'
