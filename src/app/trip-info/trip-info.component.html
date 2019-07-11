@@ -4,12 +4,26 @@ Goes into Detail Page twice for inward and outward trips
 
 
 <div [formGroup]="tripForm" fxLayout="column" fxFlexOffset="5" class='container'>
-  <mat-form-field>
+  <div fxLayout="row">
+    <mat-form-field class="datepicker">
+      <input matInput [matDatepicker]="picker" placeholder="Boarding" formControlName="boarding">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field class="timepicker">
+      <input (dateTimeChange)="setupFlag($event)" [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2" matInput
+        placeholder="Time" formControlName="boardingTime" />
+      <owl-date-time [pickerType]="'timer'" #dt2></owl-date-time>
+    </mat-form-field>
+    <div class="flag" *ngIf="flag">Vessel Still {{status}}?</div>
+  </div>
+  <!-- <mat-form-field>
     <input (dateTimeChange)="setupFlag($event)" [owlDateTime]="dt" [owlDateTimeTrigger]="dt" type="boarding" matInput
       placeholder="Boarding" formControlName="boarding">
     <owl-date-time #dt></owl-date-time>
     <div class="flag" *ngIf="flag">Vessel Still {{status}}?</div>
-  </mat-form-field>
+  </mat-form-field> -->
   <mat-form-field>
     <mat-select (selectionChange)="changePilot($event)" formControlName="pilot" placeholder="Pilot" name="pilot">
       <mat-option *ngFor="let pilot of pilots" [value]="pilot.value">

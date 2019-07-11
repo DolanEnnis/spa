@@ -31,12 +31,26 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field>
+    <!-- Date Input -->
+    <div fxLayout="row">
+      <mat-form-field class="datepicker">
+        <input matInput formControlName="eta" [matDatepicker]="picker" placeholder="Date" [value]="eta">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field class="timepicker">
+        <input [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2" matInput placeholder="Time" formControlName="etaTime" />
+        <owl-date-time [pickerType]="'timer'" #dt2></owl-date-time>
+      </mat-form-field>
+    </div>
+
+    <!--     <mat-form-field>
       <input [owlDateTime]="dt" [owlDateTimeTrigger]="dt" type="eta" matInput placeholder="ETA/Arrived"
         formControlName="eta">
       <owl-date-time #dt></owl-date-time>
       <mat-error>A due date is required!</mat-error>
-    </mat-form-field>
+    </mat-form-field> -->
 
     <mat-form-field>
       <mat-select formControlName="update" placeholder="Update From" name="update" required>

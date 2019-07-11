@@ -7,12 +7,6 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { environment } from '../environments/environment';
 import { StoreModule } from '@ngrx/store';
-import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
-import { MomentModule } from 'ngx-moment';
-//import { MomentModule } from 'angular2-moment';
-//import { AngularDateTimePickerModule } from 'angular2-datetimepicker';
-
-
 import { AuthModule } from './auth/auth.module';
 import { UIService } from './services/ui.service';
 import { VisitService } from './services/visit.service';
@@ -42,8 +36,13 @@ import { BerthStatusComponent } from './mainInfo/berth-status/berth-status.compo
 import { AllShipsInComponent } from './all-ships/all-ships-in/all-ships-in.component';
 import { ConfirmComponent } from './confirm/confirm.component';
 import { reducers, metaReducers } from './reducers';
-
-
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
+import { MomentModule } from 'ngx-moment';
+import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
+export const MY_NATIVE_FORMATS = {
+  timePickerInput: { hour: 'numeric', minute: 'numeric' },
+};
 
 @NgModule({
   declarations: [
@@ -80,7 +79,6 @@ import { reducers, metaReducers } from './reducers';
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     MomentModule,
-    // AngularDateTimePickerModule,
     StoreModule.forRoot(reducers, { metaReducers }),
   ],
   providers: [AuthService,
@@ -89,6 +87,10 @@ import { reducers, metaReducers } from './reducers';
     DataService,
     UpdateTripCanDeactaveGuardService,
     NewVisitCanDeactaveGuardService,
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+    { provide: OWL_DATE_TIME_FORMATS, useValue: MY_NATIVE_FORMATS },
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
   ],
   bootstrap: [AppComponent]
 })

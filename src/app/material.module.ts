@@ -1,4 +1,6 @@
 import { NgModule } from '@angular/core';
+import { MatMomentDateModule } from "@angular/material-moment-adapter";
+
 import {
   MatButtonModule,
   MatIconModule,
@@ -17,7 +19,9 @@ import {
   MatProgressSpinnerModule,
   MatPaginatorModule,
   MatCheckboxModule,
+  MatDatepickerModule,
 } from '@angular/material';
+
 
 @NgModule({
   imports: [MatButtonModule,
@@ -37,6 +41,8 @@ import {
     MatPaginatorModule,
     MatCheckboxModule,
     MatCardModule,
+    MatDatepickerModule,
+    MatMomentDateModule,
   ],
 
   exports: [MatButtonModule,
@@ -55,6 +61,9 @@ import {
     MatProgressSpinnerModule,
     MatPaginatorModule,
     MatCheckboxModule,
+    MatDatepickerModule,
+    MatMomentDateModule,
   ]
+
 })
 export class MaterialModule { }

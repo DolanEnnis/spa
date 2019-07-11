@@ -32,3 +32,15 @@ h4 {
 .updateInfo {
   font-size: small;
 }
+
+.datepicker {
+  margin-right: 10px;
+  max-width: 120px;
+  text-align: left;
+  }
+
+.timepicker {
+  margin-left: 10px;
+  max-width: 80px;
+  text-align: right;
+  }

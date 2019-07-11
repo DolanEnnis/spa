@@ -4,6 +4,7 @@ export interface Visit {
     ship: string;
     gt: number;
     eta: any;
+    etaTime?: any;
     status: 'Due' | 'Awaiting Berth' | 'Alongside' | 'Sailed' | null;
     inward: Trip;
     inwardConfirmed?: boolean;

@@ -17,6 +17,8 @@ import { Trip } from '../shared/trip.model';
 import { error } from 'util';
 import { Timestamp } from '@firebase/firestore-types';
 import { filter } from 'rxjs/operators';
+import * as moment from 'moment';
+
 
 @Injectable()
 export class VisitService implements OnInit, OnDestroy {
@@ -30,6 +32,7 @@ export class VisitService implements OnInit, OnDestroy {
   message: String;
   today: number;
   public pilotFlag: boolean = false;
+  myMoment: moment.Moment = moment();
 
   constructor(
     private route: ActivatedRoute,
@@ -73,10 +76,11 @@ export class VisitService implements OnInit, OnDestroy {
 
   setNewVisit(info) {
     console.log("Setting new Visit " + this.getUseruid());
+    let fulleta = this.combineTime(info.eta, info.etaTime);
     (this.visit = {
       ship: this.formatShipName(info.ship),
       gt: info.gt,
-      eta: info.eta,
+      eta: fulleta,
       marineTraffic: info.marineTraffic,
       inward: {
         typeTrip: 'inward',
@@ -99,7 +103,7 @@ export class VisitService implements OnInit, OnDestroy {
       shipNote: info.shipNote,
       updateUser: this.getUseruid(),
       update: info.update,
-      officeTime: info.eta,
+      officeTime: fulleta,
       berth: info.port,
       updatedBy: this.message,
     }),
@@ -107,6 +111,7 @@ export class VisitService implements OnInit, OnDestroy {
   }
 
   updateVisit(info, docRef) {
+    info.eta = this.combineTime(info.eta, info.etaTime);
     (this.visit = {
       ship: info.ship,
       eta: info.eta,
@@ -134,7 +139,6 @@ export class VisitService implements OnInit, OnDestroy {
 
   updateConfirmed(docRef, tripDirection) {
     if (tripDirection == "i") {
-      console.log("hi " + tripDirection)
       this.db
         .collection('visits')
         .doc(docRef)
@@ -144,7 +148,6 @@ export class VisitService implements OnInit, OnDestroy {
         .catch(() => console.error('Error writing document: ', error));;
     }
     else if (tripDirection == "o") {
-      console.log("hi " + tripDirection)
       this.db
         .collection('visits')
         .doc(docRef)
@@ -164,7 +167,9 @@ export class VisitService implements OnInit, OnDestroy {
 
   getInward(info) {
     const returnValue = info.inward;
+    returnValue.boarding = this.combineTime(info.inward.boarding, info.inward.boardingTime);
     if (typeof info.ownInwardTrip !== 'undefined') {
+      returnValue.boarding = this.combineTime(info.inward.boarding, info.inward.boardingTime)
       returnValue.pilotNotes = info.ownInwardTrip.pilotNotes;
       returnValue.pilotNo = info.ownInwardTrip.pilotNo;
       returnValue.timeOff = info.ownInwardTrip.timeOff; //this is only saving a time with entry date needs work to get time off date!
@@ -173,11 +178,13 @@ export class VisitService implements OnInit, OnDestroy {
       returnValue.good = info.ownInwardTrip.good;
       returnValue.extra = info.ownInwardTrip.extra;
     }
+    console.log(returnValue)
     return returnValue;
   }
 
   getOutward(info) {
     const returnValue = info.outward;
+    returnValue.boarding = this.combineTime(info.outward.boarding, info.outward.boardingTime)
     if (typeof info.ownOutwardTrip !== 'undefined') {
       returnValue.pilotNotes = info.ownOutwardTrip.pilotNotes;
       returnValue.pilotNo = info.ownOutwardTrip.pilotNo;
@@ -187,6 +194,7 @@ export class VisitService implements OnInit, OnDestroy {
       returnValue.good = info.ownOutwardTrip.good;
       returnValue.extra = info.ownOutwardTrip.extra;
     }
+    console.log(returnValue)
     return returnValue;
   }
 
@@ -222,6 +230,7 @@ export class VisitService implements OnInit, OnDestroy {
         if (!info.inward.boarding) {
           return 'No Info';
         }
+        console.log(info.inward.boarding)
         return info.inward.boarding;
       }
       case 'Alongside': {
@@ -229,12 +238,29 @@ export class VisitService implements OnInit, OnDestroy {
         if (!info.outward.boarding) {
           return 'No Info';
         }
+        console.log(info.inward.boarding)
         return info.outward.boarding;
       }
       default: {
         info.berth = info.outward.port;
         return info.eta;
       }
+    }
+  }
+
+  combineTime(eta, etaTime) {
+    // takes in a eta: moment and etaTime: Date and returns a date 
+    if (eta !== null) {
+      console.log(eta)
+      console.log(etaTime)
+
+      let fulleta: moment.Moment = moment(eta);
+      fulleta.hour(etaTime.getHours());
+      fulleta.minute(etaTime.getMinutes());
+      return fulleta.toDate();
+    }
+    else {
+      return eta
     }
   }
 

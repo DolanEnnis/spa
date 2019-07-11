@@ -4,6 +4,7 @@ export interface Trip {
     extra?: string;
     note?: string;
     boarding: Date;
+    boardingTime?: Date;
     confirmed?: boolean;
     submitted?: string;
     pilot: 'Fergal' | 'Brian' | 'Peter' | 'Fintan' | 'Mark' | 'Dave' | 'Paddy' | 'Cyril' | null;

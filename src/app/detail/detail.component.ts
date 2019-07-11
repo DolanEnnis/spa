@@ -28,6 +28,10 @@ import { AuthService } from '../auth/auth.service';
 import { Patron } from '../shared/patron.model';
 import { ValidateUrl } from '../shared/marineTraffic.validator';
 
+import * as _moment from 'moment';
+import { toDate } from '@angular/common/src/i18n/format_date';
+const moment = _moment;
+
 @Component({
   selector: 'app-detail',
   templateUrl: './detail.component.html',
@@ -54,6 +58,8 @@ export class DetailComponent implements OnInit, OnDestroy {
   public inConfirmed: boolean;
   public outConfirmed: boolean;
 
+
+  public eta = moment();//for testing only
   updates = [
     { value: 'Sheet', viewValue: 'Sheet' },
     { value: 'AIS', viewValue: 'AIS' },
@@ -90,7 +96,8 @@ export class DetailComponent implements OnInit, OnDestroy {
     this.subscription = this.visitService.currentVisit$.subscribe(d => {
       this.shipForm = this.fb.group({
         ship: [d.ship, [Validators.required]],
-        eta: [d.eta.toDate(), [Validators.required]],
+        eta: [((d.eta.toDate())), [Validators.required]],
+        etaTime: [d.eta.toDate()],
         gt: [
           d.gt,
           [Validators.required, Validators.min(50), Validators.max(200000)],

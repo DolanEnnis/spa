@@ -15,13 +15,23 @@
           <mat-error>A Gross Tonnage is required!</mat-error>
         </mat-form-field>
 
-        <mat-form-field>
-          <input [owlDateTime]="dt" [owlDateTimeTrigger]="dt" type="eta" matInput placeholder="ETA/Arrived"
-            formControlName="eta" />
-          <owl-date-time #dt></owl-date-time>
-          <mat-error>A due date is required!</mat-error>
-          <div class="flag" *ngIf="flagDue">Has she arrived?</div>
-        </mat-form-field>
+        <div fxLayout="row">
+          <mat-form-field class="datepicker">
+            <input matInput [matDatepicker]="picker" placeholder="Date" formControlName="eta">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field class="timepicker">
+            <input [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2" matInput placeholder="Time"
+              formControlName="etaTime" />
+            <owl-date-time [pickerType]="'timer'" #dt2></owl-date-time>
+          </mat-form-field>
+
+        </div>
+
+
+
 
       </div>
 

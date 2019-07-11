@@ -64,7 +64,7 @@ export class TripInfoComponent implements OnInit, OnChanges {
       extra: [this.trip.extra],
       note: [this.trip.note],
       boarding: [this.getBoarding(this.trip.boarding)],
-
+      boardingTime: [this.getBoarding(this.trip.boarding)],
       pilot: [this.trip.pilot],
       port: [this.trip.port],
     });
@@ -83,7 +83,6 @@ export class TripInfoComponent implements OnInit, OnChanges {
     }
     else {
       return boarding.toDate();
-
     }
   }
 

@@ -10,8 +10,10 @@ import { ValidateUrl } from '../shared/marineTraffic.validator';
 import { Router } from '@angular/router';
 
 import { Visit } from '../shared/visit.model'
-/* import { MomentModule } from 'angular2-moment';
-import * as moment from 'moment'; */
+
+//import { default as _rollupMoment } from 'moment';
+import * as _moment from 'moment';
+const moment = _moment;
 
 @Component({
   selector: 'app-new-visit',
@@ -21,6 +23,7 @@ import * as moment from 'moment'; */
 export class NewVisitComponent implements OnInit, AfterViewInit, OnDestroy {
   newShipForm: FormGroup;
   public now = new Date();
+  public eta = moment();
 
 
   ports = [
@@ -55,16 +58,15 @@ export class NewVisitComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private visitService: VisitService,
-    dateTimeAdapter: DateTimeAdapter<any>,
     private router: Router) {
-    dateTimeAdapter.setLocale('en-GB');
   }
 
   ngOnInit() {
     this.now.setMinutes(0)
     this.newShipForm = new FormGroup({
       ship: new FormControl('', { validators: [Validators.required] }),
-      eta: new FormControl(this.now, { validators: [Validators.required] }),
+      eta: new FormControl(this.eta, { validators: [Validators.required] }),
+      etaTime: new FormControl(this.eta.toDate()),
       gt: new FormControl('', { validators: [Validators.required] }),
       port: new FormControl('', { validators: [Validators.required] }),
       shipNote: new FormControl(''),
