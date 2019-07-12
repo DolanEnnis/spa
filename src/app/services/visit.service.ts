@@ -178,7 +178,6 @@ export class VisitService implements OnInit, OnDestroy {
       returnValue.good = info.ownInwardTrip.good;
       returnValue.extra = info.ownInwardTrip.extra;
     }
-    console.log(returnValue)
     return returnValue;
   }
 
@@ -194,7 +193,6 @@ export class VisitService implements OnInit, OnDestroy {
       returnValue.good = info.ownOutwardTrip.good;
       returnValue.extra = info.ownOutwardTrip.extra;
     }
-    console.log(returnValue)
     return returnValue;
   }
 
@@ -230,7 +228,6 @@ export class VisitService implements OnInit, OnDestroy {
         if (!info.inward.boarding) {
           return 'No Info';
         }
-        console.log(info.inward.boarding)
         return info.inward.boarding;
       }
       case 'Alongside': {
@@ -251,9 +248,6 @@ export class VisitService implements OnInit, OnDestroy {
   combineTime(eta, etaTime) {
     // takes in a eta: moment and etaTime: Date and returns a date 
     if (eta !== null) {
-      console.log(eta)
-      console.log(etaTime)
-
       let fulleta: moment.Moment = moment(eta);
       fulleta.hour(etaTime.getHours());
       fulleta.minute(etaTime.getMinutes());
