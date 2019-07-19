@@ -24,21 +24,21 @@ Goes into Detail Page twice for inward and outward trips
     <owl-date-time #dt></owl-date-time>
     <div class="flag" *ngIf="flag">Vessel Still {{status}}?</div>
   </mat-form-field> -->
-  <mat-form-field>
+  <mat-form-field class="numberinput">
     <mat-select (selectionChange)="changePilot($event)" formControlName="pilot" placeholder="Pilot" name="pilot">
       <mat-option *ngFor="let pilot of pilots" [value]="pilot.value">
         {{ pilot.viewValue }}
       </mat-option>
     </mat-select>
   </mat-form-field>
-  <mat-form-field>
+  <mat-form-field class="numberinput">
     <mat-select formControlName="port" placeholder="Port" name="port">
       <mat-option *ngFor="let port of ports" [value]="port.value">
         {{ port.viewValue }}
       </mat-option>
     </mat-select>
   </mat-form-field>
-  <mat-form-field>
+  <mat-form-field class="numberinput">
     <mat-select formControlName="typeTrip" placeholder="Trip Type" name="typeTrip">
       <mat-option *ngFor="let typeTrip of typeTrips" [value]="typeTrip.value">
         {{ typeTrip.viewValue }}

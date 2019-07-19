@@ -1,3 +1,7 @@
 .container {
   width: 100%;
 }
+
+.numberinput{
+  max-width: 200px;
+}

@@ -8,9 +8,9 @@
 
 
 
-    <div fxLayout="row" class="main-particulars">
+    <div fxLayout="row" fxLayout.lt-sm="column" class="main-particulars">
       <div fxLayout="column" fxFlex="40" fxFlexOffset="5" fxLayoutGap="10px">
-        <mat-form-field>
+        <mat-form-field class="numberinput">
           <input type="number" matInput placeholder="Gross" formControlName="gt" />
           <mat-error>A Gross Tonnage is required!</mat-error>
         </mat-form-field>
@@ -27,12 +27,7 @@
               formControlName="etaTime" />
             <owl-date-time [pickerType]="'timer'" #dt2></owl-date-time>
           </mat-form-field>
-
         </div>
-
-
-
-
       </div>
 
       <div fxFlex="40" fxFlexOffset="5" fxLayoutGap="10px">
@@ -42,16 +37,15 @@
                 width="54" height="21"></a>
           </div>
           <input type="text" matInput placeholder="Marine Traffic URL " formControlName="marineTraffic" />
-
         </mat-form-field>
+
         <mat-form-field class="rhs-Container">
           <input type="text" matInput placeholder="Ship Comment" formControlName="shipNote" />
-
         </mat-form-field>
       </div>
     </div>
     <!-- Start of trip info -->
-    <div fxLayout="row">
+    <div fxLayout="row" fxLayout.lt-sm="column">
       <div fxFlex="40" fxFlexOffset="7" fxLayoutGap="10px" class="trip-particulars">
         <h3>Inward Trip</h3>
         <h4 *ngIf="inConfirmed">Confirmed</h4>
@@ -70,8 +64,8 @@
     </div>
     <!-- End of trip info -->
 
-    <div>
-      <div fxFlex="40" fxLayoutGap="10px" fxLayoutAlign="end center">
+    <div fxLayout="row" fxLayout.lt-sm="column">
+      <div fxFlex="40" fxFlexOffset="5" fxLayoutGap="10px" fxLayoutAlign="center center">
         <mat-form-field>
           <mat-select formControlName="update" placeholder="Update From" name="update" required>
             <mat-option *ngFor="let update of updates" [value]="update.value">
@@ -81,7 +75,7 @@
         </mat-form-field>
       </div>
 
-      <div fxFlex="40" fxFlexOffset="5" fxLayoutGap="10px" fxLayoutAlign="end center">
+      <div fxFlex="40" fxFlexOffset="5" fxLayoutGap="10px" fxLayoutAlign="center center">
         <mat-form-field>
           <mat-select (selectionChange)="changeStatus($event)" formControlName="status" placeholder="Status"
             name="status" required>
@@ -104,7 +98,7 @@
     </div>
 
     <!-- Information only for the Pilot of the ship -->
-    <div fxLayout="row">
+    <div fxLayout="row" fxLayout.lt-sm="column">
       <div fxFlex="40" fxFlexOffset="7" fxLayoutGap="10px" class="trip-particulars">
         <h3 *ngIf="ownInwardTrip">Inward Trip Pilots Own Info</h3>
         <app-trip-info-own *ngIf="ownInwardTrip" [trip]="inward" [visitdocId]="visitdocId"

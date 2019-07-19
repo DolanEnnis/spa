@@ -7,21 +7,21 @@
     <input type="text" matInput placeholder="Own Note" formControlName="pilotNotes" />
   </mat-form-field>
 
-  <mat-form-field *ngIf="briansShip">
+  <mat-form-field *ngIf="briansShip" class="numberinput">
     <input type="number" matInput placeholder="Pilot No" formControlName="pilotNo" />
   </mat-form-field>
-  <mat-form-field *ngIf="briansShip">
+  <mat-form-field *ngIf="briansShip" class="numberinput">
     <input type="number" matInput placeholder="Month No" formControlName="monthNo" />
   </mat-form-field>
 
   <mat-form-field>
     <input type="text" matInput placeholder="Car" formControlName="car" />
   </mat-form-field>
-  <mat-form-field>
+  <mat-form-field class="numberinput">
     <input [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2" matInput placeholder="TimeOff" formControlName="timeOff" />
     <owl-date-time [pickerType]="'timer'" #dt2></owl-date-time>
   </mat-form-field>
-  <mat-form-field>
+  <mat-form-field class="numberinput">
     <input type="number" matInput placeholder="Good (1-Report, 3-Average, 5-Well Done)" formControlName="good" />
   </mat-form-field>
 

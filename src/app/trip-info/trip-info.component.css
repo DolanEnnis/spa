@@ -17,3 +17,7 @@
     max-width: 80px;
     text-align: right;
     }
+
+    .numberinput{
+      max-width: 200px;
+    }
