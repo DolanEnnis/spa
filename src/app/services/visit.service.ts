@@ -14,6 +14,7 @@ import { DataService } from './data.service';
 
 import { Visit } from '../shared/visit.model';
 import { Trip } from '../shared/trip.model';
+import { Charge } from '../shared/submittedTrip.model';
 import { error } from 'util';
 import { Timestamp } from '@firebase/firestore-types';
 import { filter } from 'rxjs/operators';
@@ -137,7 +138,8 @@ export class VisitService implements OnInit, OnDestroy {
         .catch(() => console.error('Error writing document: ', error));;
   }
 
-  updateConfirmed(docRef, tripDirection) {
+  updateConfirmed(docRef, tripDirection, trip) {
+    this.addChargeToDatabase(trip);
     if (tripDirection == "i") {
       this.db
         .collection('visits')
@@ -209,6 +211,21 @@ export class VisitService implements OnInit, OnDestroy {
           });
       });
   }
+
+  private addChargeToDatabase(charge: Charge) {
+    this.db
+      .collection('charges')
+      .add(charge)
+      .then(docRef => {
+        this.db
+          .collection('charges')
+          .doc(docRef.id)
+          .update({
+            docid: docRef.id,
+          });
+      });
+  }
+
 
   getUseruid() {
     return this.authService.getUseruid();

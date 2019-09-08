@@ -14,7 +14,7 @@ import {
 import { VisitService } from '../services/visit.service';
 import { AuthService } from '../auth/auth.service';
 import { Patron } from '../shared/patron.model';
-import { submittedTrip } from '../shared/submittedTrip.model';
+import { Charge } from '../shared/submittedTrip.model';
 import { RatesService } from '../services/rates.service';
 
 @Component({
@@ -25,13 +25,13 @@ import { RatesService } from '../services/rates.service';
 export class ConfirmComponent implements OnInit, OnDestroy {
   id: string;
   visitdocId: string;
-  visitDoc: AngularFirestoreDocument<submittedTrip>;
+  visitDoc: AngularFirestoreDocument<Charge>;
   subscription: Subscription;
   public updated = new Date();
   public updatedBy;
   private patron: Patron;
   //tripForm: FormGroup;
-  trip: submittedTrip = { ship: "" };
+  trip: Charge = { ship: "" };
   // ship: string;
   ownTrip: boolean;
   tripDirection: string;
@@ -85,16 +85,16 @@ export class ConfirmComponent implements OnInit, OnDestroy {
       this.trip.incidental = this.ratesService.incidental;
       this.trip.travel = this.ratesService.travel;
     });
-    this.ownTrip = (this.trip.pilot == this.patron.displayName);
+    this.ownTrip = (this.trip.pilot == this.patron.displayName ||
+      this.patron.displayName == "Brian");
+    // allows Admin "BD" confirm all ships!
   }
 
 
-  /*   formInitialized(name: string, form: FormGroup) {
-      this.tripForm.setControl(name, form);
-    } */
   confirm() {
     console.log("We will confirm all " + this.tripDirection);
-    this.visitService.updateConfirmed(this.visitdocId, this.tripDirection);
+
+    this.visitService.updateConfirmed(this.visitdocId, this.tripDirection, this.trip);
   }
 
   goBack() {

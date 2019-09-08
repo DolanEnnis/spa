@@ -1,5 +1,7 @@
 
-export interface submittedTrip {
+export interface Charge {
+    visitdocid?: string;
+    updateTime?: any;
     ship: string;
     gt?: number;
     boarding?: Date;
@@ -13,5 +15,5 @@ export interface submittedTrip {
     berthing?: number;
     incidental?: number;
     travel?: number;
-    dateStamp?: Date;
+    docid?: string;
 }
