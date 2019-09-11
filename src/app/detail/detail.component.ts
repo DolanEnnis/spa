@@ -29,7 +29,7 @@ import { Patron } from '../shared/patron.model';
 import { ValidateUrl } from '../shared/marineTraffic.validator';
 
 import * as _moment from 'moment';
-import { toDate } from '@angular/common/src/i18n/format_date';
+//import { toDate } from '@angular/common/src/i18n/format_date';
 const moment = _moment;
 
 @Component({

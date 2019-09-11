@@ -28,7 +28,7 @@ export class StatusListComponent implements OnInit, AfterViewInit, OnDestroy {
   private loggedinUserID: any;
   //private today = this.visitService.today
 
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   constructor(private visitService: VisitService,
     private router: Router,

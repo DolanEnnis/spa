@@ -4,8 +4,8 @@ import {
   AngularFirestoreDocument,
 } from 'angularfire2/firestore';
 
-import { Subject } from 'rxjs/Subject';
-import { Observable, Subscription, BehaviorSubject } from 'rxjs';
+
+import { Subject, Observable, Subscription, BehaviorSubject } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { now } from 'moment';
 
@@ -15,8 +15,7 @@ import { DataService } from './data.service';
 import { Visit } from '../shared/visit.model';
 import { Trip } from '../shared/trip.model';
 import { Charge } from '../shared/submittedTrip.model';
-import { error } from 'util';
-import { Timestamp } from '@firebase/firestore-types';
+//import { error } from 'util';
 import { filter } from 'rxjs/operators';
 import * as moment from 'moment';
 
@@ -47,10 +46,10 @@ export class VisitService implements OnInit, OnDestroy {
       this.data.currentMessage.subscribe(message => (this.message = message))
     );
     //testing 
-    this.db
-      .collection('visits', ref => ref.where('status', '<', 'Sailed'))
-      .valueChanges()
-      .subscribe(val => console.log(val));
+    /*     this.db
+          .collection('visits', ref => ref.where('status', '<', 'Sailed'))
+          .valueChanges()
+          .subscribe(val => console.log(val)); */
   }
 
   ngOnInit() {
@@ -135,7 +134,7 @@ export class VisitService implements OnInit, OnDestroy {
         .doc(docRef)
         .update(this.visit)
         .then(() => console.log('Document successfully written!'))
-        .catch(() => console.error('Error writing document: ', error));;
+        .catch(() => console.error('Error writing document: ', Error));;
   }
 
   updateConfirmed(docRef, tripDirection, trip) {
@@ -147,7 +146,7 @@ export class VisitService implements OnInit, OnDestroy {
         .update({ "inwardConfirmed": true })
         //for some reason in changing inward.submitted cleared outward.submitted
         .then(() => this.router.navigate(['stationBook']))
-        .catch(() => console.error('Error writing document: ', error));;
+        .catch(() => console.error('Error writing document: ', Error));;
     }
     else if (tripDirection == "o") {
       this.db
@@ -155,7 +154,7 @@ export class VisitService implements OnInit, OnDestroy {
         .doc(docRef)
         .update({ "outwardConfirmed": true })
         .then(() => this.router.navigate(['stationBook']))
-        .catch(() => console.error('Error writing document: ', error));;
+        .catch(() => console.error('Error writing document: ', Error));;
     }
   }
 

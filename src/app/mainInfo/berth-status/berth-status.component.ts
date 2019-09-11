@@ -23,7 +23,7 @@ export class BerthStatusComponent implements OnInit {
   displayedColumns = ['ship', 'officeTime', 'note', 'pilot', 'updated', 'mt'];
   private future: number;
 
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   constructor(private visitService: VisitService,
     private router: Router,

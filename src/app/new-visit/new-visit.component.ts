@@ -54,8 +54,8 @@ export class NewVisitComponent implements OnInit, AfterViewInit, OnDestroy {
   error: string;
   private reg: string = '[https://www.marinetraffic.com/en/ais/details/ships/shipid]';
 
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
 
   constructor(private visitService: VisitService,
     private router: Router) {

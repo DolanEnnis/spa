@@ -20,8 +20,8 @@ export class AllShipsInComponent implements OnInit {
   @Input('dataSourse') dataSource: MatTableDataSource<ViewInfo>;
   @Input('direction') direction: string;
 
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   private et: string;
 

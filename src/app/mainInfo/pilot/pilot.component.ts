@@ -42,8 +42,8 @@ export class PilotComponent implements OnInit, AfterViewInit, OnDestroy {
   // private pilotVisit: any;
   private today: number;
 
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
 
   constructor(
     private visitService: VisitService,

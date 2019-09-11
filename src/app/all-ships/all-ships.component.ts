@@ -3,13 +3,13 @@
 import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
-import { now } from 'moment';
+//import { Router } from '@angular/router';
+//import { now } from 'moment';
 
 //import { AngularFirestore } from 'angularfire2/firestore';
 //import { Subject } from 'rxjs/Subject';
 
-import { AuthService } from '../auth/auth.service';
+//import { AuthService } from '../auth/auth.service';
 import { VisitService } from '../services/visit.service';
 import { Visit } from '../shared/visit.model'
 import { ViewInfo } from '../shared/view.model'
@@ -35,7 +35,7 @@ export class AllShipsComponent implements OnInit, OnDestroy {
 
 
   constructor(
-    private authService: AuthService,
+    //private authService: AuthService,
     private visitService: VisitService,
     private data: DataService
     // private router: Router
@@ -90,6 +90,7 @@ export class AllShipsComponent implements OnInit, OnDestroy {
     this.visitService.fetchVisits();
     // find out if user is pilot
     this.isUserPilot = (this.pilots.includes(this.message))
+    console.log(this.isUserPilot)
   }
 
   delay(ms: number) {

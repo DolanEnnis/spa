@@ -36,6 +36,9 @@
       <li *ngIf="isAuth">
         <a routerLink="/stationBook">Previous</a>
       </li>
+      <li *ngIf="isUserPilot">
+        <a routerLink="/charges">Charges</a>
+      </li>
 
       <li *ngIf="isAuth">
         <!-- For a space -->

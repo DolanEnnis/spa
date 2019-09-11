@@ -128,7 +128,11 @@ export class AuthService implements OnInit {
   }
 
   getUser() {
-    return this.currentPatron
+    return this.currentPatron;
+  }
+
+  delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
 }
