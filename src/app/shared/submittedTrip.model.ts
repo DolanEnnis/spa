@@ -4,7 +4,7 @@ export interface Charge {
     updateTime?: any;
     ship: string;
     gt?: number;
-    boarding?: Date;
+    boarding?: any;
     typeTrip?: string;
     extra?: string;
     note?: string;

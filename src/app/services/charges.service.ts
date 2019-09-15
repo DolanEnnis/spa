@@ -36,7 +36,7 @@ export class ChargesService implements OnDestroy {
     );
   }
 
-  private addChargeToDatabase(charge: Charge) {
+  addChargeToDatabase(charge: Charge) {
     this.db
       .collection('charges')
       .add(charge)
@@ -50,7 +50,6 @@ export class ChargesService implements OnDestroy {
       });
   }
 
-
   cancelSubscriptions() {
     this.fbSubs.forEach(sub => sub.unsubscribe);
   }
@@ -58,4 +57,5 @@ export class ChargesService implements OnDestroy {
   ngOnDestroy() {
     this.cancelSubscriptions();
   }
+
 }

@@ -17,6 +17,7 @@ import { Patron } from '../shared/patron.model';
 import { Charge } from '../shared/submittedTrip.model';
 import { RatesService } from '../services/rates.service';
 
+
 @Component({
   selector: 'app-confirm',
   templateUrl: './confirm.component.html',
@@ -84,6 +85,7 @@ export class ConfirmComponent implements OnInit, OnDestroy {
       this.trip.pilotageCharge = this.ratesService.pilotCharge(this.trip.gt, this.trip.port);
       this.trip.incidental = this.ratesService.incidental;
       this.trip.travel = this.ratesService.travel;
+      this.trip.updateTime = Date.now();
     });
     this.ownTrip = (this.trip.pilot == this.patron.displayName ||
       this.patron.displayName == "Brian");

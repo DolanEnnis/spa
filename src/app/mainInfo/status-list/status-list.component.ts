@@ -23,10 +23,11 @@ export class StatusListComponent implements OnInit, AfterViewInit, OnDestroy {
   allTripsChanged = new Subject<Visit[]>();
   displayedColumns = ['ship', 'officeTime', 'port', 'note', 'pilot', 'updated', 'mt'];
   dataSource = new MatTableDataSource<Visit>();
-  myVisits: [any];
+  //myVisits: [any];
   private tpChangedSubscription: Subscription;
   private loggedinUserID: any;
   //private today = this.visitService.today
+
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
@@ -56,7 +57,7 @@ export class StatusListComponent implements OnInit, AfterViewInit, OnDestroy {
             visits[i].officeTime = "No Info"
           }
         }
-        this.dataSource.data = visits
+        this.dataSource.data = visits;
       });
     this.fetchVisits();
   }
@@ -71,7 +72,6 @@ export class StatusListComponent implements OnInit, AfterViewInit, OnDestroy {
       .valueChanges()
       .subscribe((visits: Visit[]) => {
         this.allTripsChanged.next(visits);
-
       }, error => {
         console.log("The error is in fetchVisits!");
         console.log(error);

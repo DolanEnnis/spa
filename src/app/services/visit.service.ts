@@ -11,6 +11,7 @@ import { now } from 'moment';
 
 import { AuthService } from '../auth/auth.service';
 import { DataService } from './data.service';
+import { ChargesService } from './charges.service'
 
 import { Visit } from '../shared/visit.model';
 import { Trip } from '../shared/trip.model';
@@ -34,7 +35,9 @@ export class VisitService implements OnInit, OnDestroy {
   public pilotFlag: boolean = false;
   myMoment: moment.Moment = moment();
 
+
   constructor(
+    private chargesService: ChargesService,
     private route: ActivatedRoute,
     private router: Router,
     private db: AngularFirestore,
@@ -138,7 +141,7 @@ export class VisitService implements OnInit, OnDestroy {
   }
 
   updateConfirmed(docRef, tripDirection, trip) {
-    this.addChargeToDatabase(trip);
+    this.chargesService.addChargeToDatabase(trip);
     if (tripDirection == "i") {
       this.db
         .collection('visits')
@@ -211,19 +214,7 @@ export class VisitService implements OnInit, OnDestroy {
       });
   }
 
-  private addChargeToDatabase(charge: Charge) {
-    this.db
-      .collection('charges')
-      .add(charge)
-      .then(docRef => {
-        this.db
-          .collection('charges')
-          .doc(docRef.id)
-          .update({
-            docid: docRef.id,
-          });
-      });
-  }
+
 
 
   getUseruid() {
