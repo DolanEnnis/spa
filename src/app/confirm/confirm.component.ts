@@ -95,7 +95,7 @@ export class ConfirmComponent implements OnInit, OnDestroy {
 
   confirm() {
     console.log("We will confirm all " + this.tripDirection);
-
+    this.confirmed = true;
     this.visitService.updateConfirmed(this.visitdocId, this.tripDirection, this.trip);
   }
 

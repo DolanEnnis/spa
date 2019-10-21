@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import Tabulator from 'tabulator-tables';
+//http://tabulator.info/docs/4.4
 import { Subscription } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
 import { AngularFirestore } from 'angularfire2/firestore';
@@ -25,6 +26,8 @@ export class ChargesComponent implements OnInit, OnDestroy {
 
   columnNames: any[] = [];
   myTable: Tabulator;
+  //TODOS next line for testing 
+  dateTest: _moment.Moment;
 
   constructor(private chargeService: ChargesService,
     private db: AngularFirestore,
@@ -32,30 +35,41 @@ export class ChargesComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
+    //TODOS next line for testing 
+    this.dateTest = moment([2019, 0, 14])
     this.myTable = new Tabulator("#tabulator-div");
     this.columnNames = [
-      { title: "Timestamp", field: "updateTime" },
+      {
+        title: "Timestamp", field: "updateTime", headerSort: false
+      },
       { title: "Ship", field: "ship" },
       { title: "GT", field: "gt" },
-      { title: "Date", field: "boarding" },
+      {
+        title: "Date", field: "boarding", headerSort: false
+      },
       { title: "In / Out", field: "typeTrip" },
       { title: "To/From", field: "port" },
       { title: "Extra Services", field: "extra" },
       { title: "Pilot", field: "pilot" },
       { title: "Comment on Ship", field: "note" },
+      { title: "Trip Datestamp", field: "boardStamp", visible: false, },
     ];
     this.myTable.setColumns(this.columnNames);
 
     this.tpChangedSubscription = this.allChargesChanged.subscribe(
       (charges: Charge[]) => {
         for (let i = 0; i < charges.length; i++) {
-          charges[i].updateTime = moment(charges[i].updateTime).format("DD/MM/YYYY");
-          charges[i].boarding = moment(charges[i].boarding * 1000).format("DD/MM/YYYY")
+          charges[i].updateTime = moment(charges[i].updateTime).format("DD/MM/YY");
+          charges[i].boardStamp = charges[i].boarding
+          charges[i].boarding = moment(charges[i].boarding * 1000).format("DD-MMM")
         }
         this.myTable.setData(charges);
+
+
         this.myTable.setSort([
-          { column: "boarding", dir: "asc", sorter: "date", }, //sort by this first
-          { column: "ship", dir: "asc" }, //then sort by this second
+          { column: "ship", dir: "asc" },
+          { column: "boardStamp", dir: "desc", }, //sort by this first 
+          // { column: "ship", dir: "asc" }, then sort by this second
         ]);
       });
     this.fetchVisits()

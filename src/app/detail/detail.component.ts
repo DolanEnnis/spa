@@ -42,9 +42,7 @@ export class DetailComponent implements OnInit, OnDestroy {
   visitDoc: AngularFirestoreDocument<Visit>;
   currentVisit: Observable<any>;
   subscription: Subscription;
-
   shipForm: FormGroup;
-  //public now = new Date();
   public updated = new Date();
   public updatedBy;
   public status;
@@ -80,11 +78,9 @@ export class DetailComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    //private db: AngularFirestore,
     private visitService: VisitService,
     private authService: AuthService,
     private _location: Location,
-    //private mt: any,
     dateTimeAdapter: DateTimeAdapter<any>
   ) {
     dateTimeAdapter.setLocale('en-GB');
@@ -126,6 +122,7 @@ export class DetailComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     const info = this.shipForm.value;
+    console.log(this.shipForm.value)
     this.visitService.updateVisit(info, this.visitdocId);
     this.shipForm.markAsPristine();
     this._location.back();
@@ -133,6 +130,7 @@ export class DetailComponent implements OnInit, OnDestroy {
 
   confirmIn(event) {
     const info = this.shipForm.value;
+    console.log(this.shipForm.value)
     this.visitService.updateVisit(info, this.visitdocId);
     this.shipForm.markAsPristine();
     this.router.navigate(['confirm', this.visitdocId + 'i']);

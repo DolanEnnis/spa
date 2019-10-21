@@ -41,6 +41,7 @@ import { reducers, metaReducers } from './reducers';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MomentModule } from 'ngx-moment';
+//https://momentjs.com/docs/#/displaying/unix-timestamp-milliseconds/
 import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
 export const MY_NATIVE_FORMATS = {
   timePickerInput: { hour: 'numeric', minute: 'numeric' },
