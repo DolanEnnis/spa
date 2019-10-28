@@ -9,7 +9,7 @@ import { AllShipsComponent } from './all-ships/all-ships.component';
 import { DetailComponent } from './detail/detail.component'
 import { OfficeComponent } from './mainInfo/office/office.component'
 import { BerthComponent } from './mainInfo/berth/berth.component'
-import { PilotComponent } from './mainInfo/pilot/pilot.component'
+import { PilotComponent } from './all-ships/pilot/pilot.component'
 import { UpdateTripCanDeactaveGuardService } from './detail/update-trip-can-deactave-guard.service'
 import { NewVisitCanDeactaveGuardService } from './new-visit/new-visit-can-deactive-guard.service'
 import { ConfirmComponent } from './confirm/confirm.component'

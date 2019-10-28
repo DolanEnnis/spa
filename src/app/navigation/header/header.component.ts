@@ -31,7 +31,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.message = message;
     });
     (async () => {
-      await this.delay(2000);
+      await this.delay(5000);
       // delay so message is filled!
       // find out if user is pilot
       this.isUserPilot = (this.pilots.includes(this.message))

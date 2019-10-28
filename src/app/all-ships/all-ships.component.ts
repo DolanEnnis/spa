@@ -64,6 +64,7 @@ export class AllShipsComponent implements OnInit, OnDestroy {
               berth: visit.inward.port,
               boarded: this.visitService.getBoarded(visit.eta),
               docid: visit.docid,
+              confirmed: visit.inwardConfirmed,
             }
           });
         const outwardInfo: ViewInfo[] = visits
@@ -77,6 +78,7 @@ export class AllShipsComponent implements OnInit, OnDestroy {
               berth: visit.outward.port,
               boarded: this.visitService.getBoarded(visit.outward.boarding),
               docid: visit.docid,
+              confirmed: visit.outwardConfirmed,
             };
           });
         this.dataSourceIn.data = inwardInfo;

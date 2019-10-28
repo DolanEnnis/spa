@@ -41,7 +41,7 @@
 
       <mat-form-field class="timepicker">
         <input [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2" matInput placeholder="Time" formControlName="etaTime" />
-        <owl-date-time [pickerType]="'timer'" #dt2></owl-date-time>
+        <owl-date-time [pickerType]="'timer'" [startAt]="now" #dt2></owl-date-time>
       </mat-form-field>
     </div>
 

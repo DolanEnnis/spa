@@ -14,7 +14,7 @@ Goes into Detail Page twice for inward and outward trips
     <mat-form-field class="timepicker">
       <input (dateTimeChange)="setupFlag($event)" [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2" matInput
         placeholder="Time" formControlName="boardingTime" />
-      <owl-date-time [pickerType]="'timer'" #dt2></owl-date-time>
+      <owl-date-time [pickerType]="'timer'" [startAt]="startAtHour" #dt2></owl-date-time>
     </mat-form-field>
     <div class="flag" *ngIf="flag">Vessel Still {{status}}?</div>
   </div>

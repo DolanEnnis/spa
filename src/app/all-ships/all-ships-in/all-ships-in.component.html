@@ -34,6 +34,13 @@
     <mat-cell *matCellDef="let element">{{ element.pilot }}</mat-cell>
   </ng-container>
 
+  <ng-container matColumnDef="confirmed">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Confirmed</mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <mat-checkbox [(ngModel)]="element.confirmed" (change)="outconfirm()"></mat-checkbox>
+    </mat-cell>
+  </ng-container>
+
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
   <mat-row *matRowDef="let row; columns: displayedColumns" (click)="handleRowClick(row)"
     [ngStyle]="{'background-color': getColor(row)}">

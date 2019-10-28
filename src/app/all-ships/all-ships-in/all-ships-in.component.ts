@@ -15,7 +15,7 @@ import { ViewInfo } from '../../shared/view.model';
 })
 export class AllShipsInComponent implements OnInit {
 
-  displayedColumns = ['boarded', 'ship', 'gt', 'berth', 'pilot'];
+  displayedColumns = ['boarded', 'ship', 'gt', 'berth', 'pilot', 'confirmed',];
   private today: number;
   @Input('dataSourse') dataSource: MatTableDataSource<ViewInfo>;
   @Input('direction') direction: string;

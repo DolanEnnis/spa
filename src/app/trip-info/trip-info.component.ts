@@ -19,6 +19,7 @@ export class TripInfoComponent implements OnInit, OnChanges {
   @Input() trip: Trip;
   @Input() status: string;
   tripForm: FormGroup;
+  startAtHour = new Date();
 
 
 
@@ -68,6 +69,7 @@ export class TripInfoComponent implements OnInit, OnChanges {
       pilot: [this.trip.pilot],
       port: [this.trip.port],
     });
+
     this.boarding = moment(this.getBoarding(this.trip.boarding))
     this.formReady.emit(this.tripForm);
   }
@@ -79,9 +81,11 @@ export class TripInfoComponent implements OnInit, OnChanges {
 
   getBoarding(boarding) {
     if (boarding === null) {
+      this.startAtHour.setMinutes(0)
       return boarding;
     }
     else {
+      this.startAtHour = boarding.toDate();
       return boarding.toDate();
     }
   }

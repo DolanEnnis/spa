@@ -32,7 +32,7 @@ import { OfficeComponent } from './mainInfo/office/office.component';
 import { BerthComponent } from './mainInfo/berth/berth.component';
 import { UpdateTripCanDeactaveGuardService } from './detail/update-trip-can-deactave-guard.service';
 import { NewVisitCanDeactaveGuardService } from './new-visit/new-visit-can-deactive-guard.service';
-import { PilotComponent } from './mainInfo/pilot/pilot.component';
+import { PilotComponent } from './all-ships/pilot/pilot.component';
 import { TripInfoOwnComponent } from './trip-info-own/trip-info-own.component';
 import { BerthStatusComponent } from './mainInfo/berth-status/berth-status.component';
 import { AllShipsInComponent } from './all-ships/all-ships-in/all-ships-in.component';
