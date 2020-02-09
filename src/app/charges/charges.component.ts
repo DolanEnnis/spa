@@ -77,7 +77,9 @@ export class ChargesComponent implements OnInit, OnDestroy {
 
 
   fetchVisits() {
-    this.fbSubs.push(this.db.collection('charges')
+    // THis is only a test and needs to work on dates (good luck with that)
+    this.fbSubs.push(this.db.collection('charges', ref => ref.where("pilot", "==", "Fintan")
+    )
       .valueChanges()
       .subscribe((charges: Charge[]) => {
         this.allChargesChanged.next(charges);

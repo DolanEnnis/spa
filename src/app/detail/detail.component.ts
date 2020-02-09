@@ -111,7 +111,7 @@ export class DetailComponent implements OnInit, OnDestroy {
       this.inConfirmed = d.inwardConfirmed;
       this.outConfirmed = d.outwardConfirmed;
     });
-    this.setFlag(this.shipForm.value);
+    this.setFlag();
     this.statusColor = this.getColor();
     this.setOwnTrips();
   }
@@ -150,11 +150,17 @@ export class DetailComponent implements OnInit, OnDestroy {
   changeStatus(event) {
     this.status = event.value;
     this.statusColor = this.visitService.getColor(event.value);
-    this.setFlag(this.shipForm.value)
+    this.setFlag()
   }
 
-  setFlag(d) {
-    if (d.status === "Due" && d.eta.valueOf() / 1000 < this.visitService.today) {
+  changeEta(event) {
+    this.setFlag()
+  }
+
+  setFlag() {
+    console.log(this.shipForm.value.status)
+    var newEta = this.visitService.combineTime(this.shipForm.value.eta, this.shipForm.value.etaTime)
+    if (this.shipForm.value.status === "Due" && newEta.valueOf() / 1000 < this.visitService.today) {
       this.flagDue = true
     }
     else {

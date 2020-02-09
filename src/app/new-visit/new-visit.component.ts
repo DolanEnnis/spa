@@ -66,7 +66,7 @@ export class NewVisitComponent implements OnInit, AfterViewInit, OnDestroy {
     this.newShipForm = new FormGroup({
       ship: new FormControl('', { validators: [Validators.required] }),
       eta: new FormControl(this.eta, { validators: [Validators.required] }),
-      etaTime: new FormControl(''),
+      etaTime: new FormControl(this.now, { validators: [Validators.required] }),
       gt: new FormControl('', { validators: [Validators.required] }),
       port: new FormControl('', { validators: [Validators.required] }),
       shipNote: new FormControl(''),
