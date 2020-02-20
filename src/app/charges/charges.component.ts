@@ -35,8 +35,7 @@ export class ChargesComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-    //TODOS next line for testing 
-    this.dateTest = moment([2019, 0, 14])
+
     this.myTable = new Tabulator("#tabulator-div");
     this.columnNames = [
       {
@@ -60,8 +59,12 @@ export class ChargesComponent implements OnInit, OnDestroy {
       (charges: Charge[]) => {
         for (let i = 0; i < charges.length; i++) {
           charges[i].updateTime = moment(charges[i].updateTime).format("DD/MM/YY");
+          const t = moment(charges[i].boarding)
+          if (!t.isValid()) {
+            charges[i].boarding = charges[i].boarding.seconds
+          }
           charges[i].boardStamp = charges[i].boarding
-          charges[i].boarding = moment(charges[i].boarding * 1000).format("DD-MMM")
+          charges[i].boarding = moment(charges[i].boarding * 1000).format("DD-MMM-YYYY")
         }
         this.myTable.setData(charges);
 
@@ -78,7 +81,9 @@ export class ChargesComponent implements OnInit, OnDestroy {
 
   fetchVisits() {
     // THis is only a test and needs to work on dates (good luck with that)
-    this.fbSubs.push(this.db.collection('charges', ref => ref.where("pilot", "==", "Fintan")
+    //, ref => ref.where("pilot", "==", "Brian")
+
+    this.fbSubs.push(this.db.collection('charges'
     )
       .valueChanges()
       .subscribe((charges: Charge[]) => {

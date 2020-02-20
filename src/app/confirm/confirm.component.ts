@@ -15,6 +15,7 @@ import { VisitService } from '../services/visit.service';
 import { AuthService } from '../auth/auth.service';
 import { Patron } from '../shared/patron.model';
 import { Charge } from '../shared/submittedTrip.model';
+import { DataService } from '../services/data.service';
 import { RatesService } from '../services/rates.service';
 
 
@@ -27,6 +28,7 @@ export class ConfirmComponent implements OnInit, OnDestroy {
   id: string;
   visitdocId: string;
   visitDoc: AngularFirestoreDocument<Charge>;
+  private subs: Subscription[] = [];
   subscription: Subscription;
   public updated = new Date();
   public updatedBy;
@@ -36,10 +38,8 @@ export class ConfirmComponent implements OnInit, OnDestroy {
   // ship: string;
   ownTrip: boolean;
   tripDirection: string;
-  public confirmed: boolean;
-
-
-
+  //public confirmed: boolean;
+  dateError: boolean;
 
   constructor(
     //private fb: FormBuilder,
@@ -50,59 +50,68 @@ export class ConfirmComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private _location: Location,
     private ratesService: RatesService,
+    private data: DataService,
   ) {
     this.id = this.route.snapshot.params['id'];
     this.tripDirection = this.id[this.id.length - 1];
     this.visitdocId = this.id.substring(0, this.id.length - 1);
+    this.subs.push(
+      this.data.currentTrip.subscribe(trip => (this.trip = trip))
+    );
   }
 
   ngOnInit() {
+    console.log(this.trip.boarding)
     this.patron = this.authService.getUser();
-    this.subscription = this.visitService.currentVisit$.subscribe(d => {
+    /* this.subs.push(
+      this.visitService.currentVisit$.subscribe(d => {
 
-      this.trip.ship = d.ship;
-      this.trip.gt = d.gt;
-      if (this.tripDirection == 'i') {
-        //INWARD TRIP
-        this.trip.boarding = this.visitService.getBoarded(d.inward.boarding);
-        this.trip.typeTrip = "Inward";
-        this.trip.extra = d.inward.extra;
-        this.trip.pilot = d.inward.pilot;
-        this.trip.port = d.inward.port;
-        this.confirmed = d.inwardConfirmed;
-      }
-      else {
-        //OUTWARD TRIP
-        this.trip.boarding = this.visitService.getBoarded(d.outward.boarding);
-        this.trip.typeTrip = "Outward";
-        this.trip.extra = d.outward.extra;
-        this.trip.note = d.outward.note;
-        this.trip.pilot = d.outward.pilot;
-        this.trip.port = d.outward.port;
-        this.confirmed = d.outwardConfirmed;
-      }
-      this.trip.berthing = this.ratesService.berthing(this.trip.gt, this.trip.port);
-      this.trip.pilotageCharge = this.ratesService.pilotCharge(this.trip.gt, this.trip.port);
-      this.trip.incidental = this.ratesService.incidental;
-      this.trip.travel = this.ratesService.travel;
-      this.trip.updateTime = Date.now();
-    });
+        //this.trip.ship = d.ship;
+        //this.trip.gt = d.gt;
+        /*         if (this.tripDirection == 'i') {
+                  //INWARD TRIP
+                  this.trip.boarding = this.visitService.getBoarded(d.inward.boarding);
+                  this.trip.typeTrip = "Inward";
+                  this.trip.extra = d.inward.extra;
+                  this.trip.pilot = d.inward.pilot;
+                  this.trip.port = d.inward.port;
+                  this.confirmed = d.inwardConfirmed;
+                }
+                else {
+                  //OUTWARD TRIP
+                  this.trip.boarding = this.visitService.getBoarded(d.outward.boarding);
+                  this.trip.typeTrip = "Outward";
+                  this.trip.extra = d.outward.extra;
+                  this.trip.note = d.outward.note;
+                  this.trip.pilot = d.outward.pilot;
+                  this.trip.port = d.outward.port;
+                  this.confirmed = d.outwardConfirmed;
+                }
+
+      })); */
+    this.trip.berthing = this.ratesService.berthing(this.trip.gt, this.trip.port);
+    this.trip.pilotageCharge = this.ratesService.pilotCharge(this.trip.gt, this.trip.port);
+    this.trip.incidental = this.ratesService.incidental;
+    this.trip.travel = this.ratesService.travel;
+    this.trip.updateTime = Date.now();
     this.ownTrip = (this.trip.pilot == this.patron.displayName ||
       this.patron.displayName == "Brian");
     // allows Admin "BD" confirm all ships!
+    this.dateError = ((this.trip.boarding) > this.trip.updateTime)
+    //gives an error if the boarding is in the future!
   }
 
 
   confirm() {
-    console.log("We will confirm all " + this.tripDirection);
-    this.confirmed = true;
+    this.trip.confirmed = true;
     this.visitService.updateConfirmed(this.visitdocId, this.tripDirection, this.trip);
   }
 
   goBack() {
     this._location.back();
   }
+
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.subs.forEach(sub => sub.unsubscribe);
   }
 }

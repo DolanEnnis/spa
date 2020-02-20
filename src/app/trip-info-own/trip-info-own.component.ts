@@ -47,7 +47,6 @@ export class TripInfoOwnComponent implements OnInit {
 
 
   confirm(): void {
-    console.log(this.formReady.emit.toString)
     this.confirming.emit(this.trip.typeTrip);
   }
 }

@@ -92,7 +92,6 @@ export class AllShipsComponent implements OnInit, OnDestroy {
     this.visitService.fetchVisits();
     // find out if user is pilot
     this.isUserPilot = (this.pilots.includes(this.message))
-    console.log(this.isUserPilot)
   }
 
   delay(ms: number) {

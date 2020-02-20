@@ -29,6 +29,8 @@ import { Patron } from '../shared/patron.model';
 import { ValidateUrl } from '../shared/marineTraffic.validator';
 
 import * as _moment from 'moment';
+import { Charge } from '../shared/submittedTrip.model';
+import { DataService } from '../services/data.service';
 //import { toDate } from '@angular/common/src/i18n/format_date';
 const moment = _moment;
 
@@ -41,7 +43,8 @@ export class DetailComponent implements OnInit, OnDestroy {
   visitdocId: string;
   visitDoc: AngularFirestoreDocument<Visit>;
   currentVisit: Observable<any>;
-  subscription: Subscription;
+  private subs: Subscription[] = [];
+  //subscription: Subscription;
   shipForm: FormGroup;
   public updated = new Date();
   public updatedBy;
@@ -55,6 +58,7 @@ export class DetailComponent implements OnInit, OnDestroy {
   public flagDue: boolean = false;
   public inConfirmed: boolean;
   public outConfirmed: boolean;
+  trip: Charge;
 
 
   public eta = moment();//for testing only
@@ -80,37 +84,42 @@ export class DetailComponent implements OnInit, OnDestroy {
     private router: Router,
     private visitService: VisitService,
     private authService: AuthService,
+    private data: DataService,
     private _location: Location,
     dateTimeAdapter: DateTimeAdapter<any>
   ) {
     dateTimeAdapter.setLocale('en-GB');
     this.visitdocId = this.route.snapshot.params['id'];
+    this.subs.push(
+      this.data.currentTrip.subscribe(trip => (this.trip = trip))
+    );
   }
 
   ngOnInit() {
     this.patron = this.authService.getUser();
-    this.subscription = this.visitService.currentVisit$.subscribe(d => {
-      this.shipForm = this.fb.group({
-        ship: [d.ship, [Validators.required]],
-        eta: [((d.eta.toDate())), [Validators.required]],
-        etaTime: [d.eta.toDate()],
-        gt: [
-          d.gt,
-          [Validators.required, Validators.min(50), Validators.max(200000)],
-        ],
-        marineTraffic: [d.marineTraffic, ({ validators: [ValidateUrl] })],
-        shipNote: d.shipNote,
-        status: [d.status, [Validators.required]],
-        update: [d.update, [Validators.required]],
-      });
-      this.inward = d.inward;
-      this.outward = d.outward;
-      this.updated = d.updateTime;
-      this.updatedBy = d.updatedBy;
-      this.status = d.status;
-      this.inConfirmed = d.inwardConfirmed;
-      this.outConfirmed = d.outwardConfirmed;
-    });
+    this.subs.push(
+      this.visitService.currentVisit$.subscribe(d => {
+        this.shipForm = this.fb.group({
+          ship: [d.ship, [Validators.required]],
+          eta: [((d.eta.toDate())), [Validators.required]],
+          etaTime: [d.eta.toDate()],
+          gt: [
+            d.gt,
+            [Validators.required, Validators.min(50), Validators.max(200000)],
+          ],
+          marineTraffic: [d.marineTraffic, ({ validators: [ValidateUrl] })],
+          shipNote: d.shipNote,
+          status: [d.status, [Validators.required]],
+          update: [d.update, [Validators.required]],
+        });
+        this.inward = d.inward;
+        this.outward = d.outward;
+        this.updated = d.updateTime;
+        this.updatedBy = d.updatedBy;
+        this.status = d.status;
+        this.inConfirmed = d.inwardConfirmed;
+        this.outConfirmed = d.outwardConfirmed;
+      }));
     this.setFlag();
     this.statusColor = this.getColor();
     this.setOwnTrips();
@@ -121,26 +130,41 @@ export class DetailComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    const info = this.shipForm.value;
-    console.log(this.shipForm.value)
-    this.visitService.updateVisit(info, this.visitdocId);
-    this.shipForm.markAsPristine();
+    this.submitting();
     this._location.back();
   }
 
   confirmIn(event) {
+    this.submitting();
     const info = this.shipForm.value;
-    console.log(this.shipForm.value)
-    this.visitService.updateVisit(info, this.visitdocId);
-    this.shipForm.markAsPristine();
+    this.trip.boarding = (info.inward.boarding);
+    this.trip.typeTrip = "Inward";
+    this.trip.extra = info.inward.extra;
+    this.trip.pilot = info.inward.pilot;
+    this.trip.port = info.inward.port;
+    this.trip.confirmed = this.inConfirmed;
     this.router.navigate(['confirm', this.visitdocId + 'i']);
+    console.log(this.trip)
   }
 
   confirmOut(event) {
+    this.submitting();
     const info = this.shipForm.value;
+    this.trip.boarding = (info.outward.boarding);
+    this.trip.typeTrip = "Outward";
+    this.trip.extra = info.outward.extra;
+    this.trip.pilot = info.outward.pilot;
+    this.trip.port = info.outward.port;
+    this.trip.confirmed = this.outConfirmed;
+    this.router.navigate(['confirm', this.visitdocId + 'o']);
+  }
+
+  submitting() {
+    const info = this.shipForm.value;
+    this.trip.ship = info.ship;
+    this.trip.gt = info.gt;
     this.visitService.updateVisit(info, this.visitdocId);
     this.shipForm.markAsPristine();
-    this.router.navigate(['confirm', this.visitdocId + 'o']);
   }
 
   getColor() {
@@ -158,7 +182,6 @@ export class DetailComponent implements OnInit, OnDestroy {
   }
 
   setFlag() {
-    console.log(this.shipForm.value.status)
     var newEta = this.visitService.combineTime(this.shipForm.value.eta, this.shipForm.value.etaTime)
     if (this.shipForm.value.status === "Due" && newEta.valueOf() / 1000 < this.visitService.today) {
       this.flagDue = true
@@ -187,6 +210,6 @@ export class DetailComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.subs.forEach(sub => sub.unsubscribe);
   }
 }

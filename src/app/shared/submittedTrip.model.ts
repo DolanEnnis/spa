@@ -17,4 +17,5 @@ export interface Charge {
     incidental?: number;
     travel?: number;
     docid?: string;
+    confirmed?: boolean;
 }

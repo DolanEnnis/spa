@@ -14,11 +14,12 @@ import { DataService } from './data.service';
 import { ChargesService } from './charges.service'
 
 import { Visit } from '../shared/visit.model';
-import { Trip } from '../shared/trip.model';
-import { Charge } from '../shared/submittedTrip.model';
+//import { Trip } from '../shared/trip.model';
+//import { Charge } from '../shared/submittedTrip.model';
 //import { error } from 'util';
-import { filter } from 'rxjs/operators';
+//import { filter } from 'rxjs/operators';
 import * as moment from 'moment';
+import { Charge } from '../shared/submittedTrip.model';
 
 
 @Injectable()
@@ -31,6 +32,7 @@ export class VisitService implements OnInit, OnDestroy {
   currentVisit$ = this.currentVisitSource.asObservable();
   subscriptions: Subscription[];
   message: String;
+  trip: Charge;
   today: number;
   public pilotFlag: boolean = false;
   myMoment: moment.Moment = moment();
@@ -46,13 +48,10 @@ export class VisitService implements OnInit, OnDestroy {
   ) {
     this.today = now() / 1000;
     this.fbSubs.push(
-      this.data.currentMessage.subscribe(message => (this.message = message))
+      this.data.currentMessage.subscribe(message => (this.message = message)),
+      this.data.currentTrip.subscribe(trip => (this.trip = trip))
     );
-    //testing 
-    /*     this.db
-          .collection('visits', ref => ref.where('status', '<', 'Sailed'))
-          .valueChanges()
-          .subscribe(val => console.log(val)); */
+
   }
 
   ngOnInit() {
@@ -141,6 +140,7 @@ export class VisitService implements OnInit, OnDestroy {
   }
 
   updateConfirmed(docRef, tripDirection, trip) {
+    console.log(trip)
     this.chargesService.addChargeToDatabase(trip);
     if (tripDirection == "i") {
       this.db
@@ -214,9 +214,6 @@ export class VisitService implements OnInit, OnDestroy {
       });
   }
 
-
-
-
   getUseruid() {
     return this.authService.getUseruid();
   }
@@ -255,18 +252,22 @@ export class VisitService implements OnInit, OnDestroy {
   combineTime(eta, etaTime) {
     // takes in a eta: moment and etaTime: Date and returns a date 
     if (eta !== null) {
-      let fulleta: moment.Moment = moment(eta);
-      fulleta.hour(etaTime.getHours());
-      fulleta.minute(etaTime.getMinutes());
-      return fulleta.toDate();
+      if (etaTime !== null) {
+        let fulleta: moment.Moment = moment(eta);
+        fulleta.hour(etaTime.getHours());
+        fulleta.minute(etaTime.getMinutes());
+        return fulleta.toDate();
+      }
+      else {
+        let fulleta: moment.Moment = moment(eta);
+        fulleta.hour(12);
+        fulleta.minute(0);
+        return fulleta.toDate();
+      }
     }
     else {
       return eta
     }
-  }
-
-  cancelSubscriptions() {
-    this.fbSubs.forEach(sub => sub.unsubscribe);
   }
 
   changecurrentVisit(visit: Visit) {
@@ -292,6 +293,10 @@ export class VisitService implements OnInit, OnDestroy {
       return sudoDate;
     }
     return boarding.seconds;
+  }
+
+  cancelSubscriptions() {
+    this.fbSubs.forEach(sub => sub.unsubscribe);
   }
 
   ngOnDestroy() {
