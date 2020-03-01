@@ -151,6 +151,7 @@ export class DetailComponent implements OnInit, OnDestroy {
     this.submitting();
     const info = this.shipForm.value;
     this.trip.boarding = (info.outward.boarding);
+    if (this.trip.boarding == null) { }
     this.trip.typeTrip = "Outward";
     this.trip.extra = info.outward.extra;
     this.trip.pilot = info.outward.pilot;
