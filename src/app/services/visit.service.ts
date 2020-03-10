@@ -85,7 +85,7 @@ export class VisitService implements OnInit, OnDestroy {
       eta: fulleta,
       marineTraffic: info.marineTraffic,
       inward: {
-        typeTrip: 'inward',
+        typeTrip: 'In',
         boarding: null,
         confirmed: false,
         pilot: null,
@@ -93,7 +93,7 @@ export class VisitService implements OnInit, OnDestroy {
         pilotNotes: null,
       },
       outward: {
-        typeTrip: 'outward',
+        typeTrip: 'Out',
         boarding: null,
         confirmed: false,
         pilot: null,

@@ -24,8 +24,8 @@ export class TripInfoComponent implements OnInit, OnChanges {
 
 
   typeTrips = [
-    { value: 'inward', viewValue: 'Inward' },
-    { value: 'outward', viewValue: 'Outward' },
+    { value: 'In', viewValue: 'In' },
+    { value: 'Out', viewValue: 'Out' },
     { value: 'anchoring', viewValue: 'Anchoring' },
     { value: 'berthToBerth', viewValue: 'Berth To Berth' },
     { value: 'other', viewValue: 'Other' },
@@ -98,8 +98,8 @@ export class TripInfoComponent implements OnInit, OnChanges {
   setFlag(boarding: moment.Moment, status: string) {
     if (boarding) {
       if ((boarding).isBefore(moment.now())) {
-        if ((status == "Awaiting Berth" && this.trip.typeTrip == "inward") ||
-          (status == "Alongside" && this.trip.typeTrip == "outward")) {
+        if ((status == "Awaiting Berth" && this.trip.typeTrip == "In") ||
+          (status == "Alongside" && this.trip.typeTrip == "Out")) {
           this.flag = true
         }
         else { this.flag = false }

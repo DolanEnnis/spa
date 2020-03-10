@@ -138,7 +138,7 @@ export class DetailComponent implements OnInit, OnDestroy {
     this.submitting();
     const info = this.shipForm.value;
     this.trip.boarding = (info.inward.boarding);
-    this.trip.typeTrip = "Inward";
+    this.trip.typeTrip = "In";
     this.trip.extra = info.inward.extra;
     this.trip.pilot = info.inward.pilot;
     this.trip.port = info.inward.port;
@@ -152,7 +152,7 @@ export class DetailComponent implements OnInit, OnDestroy {
     const info = this.shipForm.value;
     this.trip.boarding = (info.outward.boarding);
     if (this.trip.boarding == null) { }
-    this.trip.typeTrip = "Outward";
+    this.trip.typeTrip = "Out";
     this.trip.extra = info.outward.extra;
     this.trip.pilot = info.outward.pilot;
     this.trip.port = info.outward.port;
