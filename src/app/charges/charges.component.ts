@@ -26,8 +26,7 @@ export class ChargesComponent implements OnInit, OnDestroy {
 
   columnNames: any[] = [];
   myTable: Tabulator;
-  //TODOS next line for testing 
-  dateTest: _moment.Moment;
+
 
   constructor(private chargeService: ChargesService,
     private db: AngularFirestore,
@@ -35,7 +34,6 @@ export class ChargesComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-
     this.myTable = new Tabulator("#tabulator-div");
     this.columnNames = [
       {
@@ -51,7 +49,7 @@ export class ChargesComponent implements OnInit, OnDestroy {
       { title: "Extra Services", field: "extra" },
       { title: "Pilot", field: "pilot" },
       { title: "Comment on Ship", field: "note" },
-      { title: "Trip Datestamp", field: "boardStamp", visible: false, },
+      { title: "Trip Datestamp", field: "boardStamp", visible: false },
     ];
     this.myTable.setColumns(this.columnNames);
 
@@ -80,10 +78,11 @@ export class ChargesComponent implements OnInit, OnDestroy {
 
 
   fetchVisits() {
-    // THis is only a test and needs to work on dates (good luck with that)
-    //, ref => ref.where("pilot", "==", "Brian")
+    //only get dates from the last 45 days
+    var fortyfiveDaysAgoDate = Date.now() - 3888000000;
+    var beginningDateObject = new Date(fortyfiveDaysAgoDate);
 
-    this.fbSubs.push(this.db.collection('charges'
+    this.fbSubs.push(this.db.collection('charges', ref => ref.where("boarding", ">", beginningDateObject)
     )
       .valueChanges()
       .subscribe((charges: Charge[]) => {

@@ -19,3 +19,4 @@ export interface Charge {
     docid?: string;
     confirmed?: boolean;
 }
+
