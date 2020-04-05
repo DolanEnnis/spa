@@ -6,14 +6,14 @@
   <mat-form-field>
     <input type="text" matInput placeholder="Own Note" formControlName="pilotNotes" />
   </mat-form-field>
-
-  <mat-form-field *ngIf="briansShip" class="numberinput">
-    <input type="number" matInput placeholder="Pilot No" formControlName="pilotNo" />
-  </mat-form-field>
-  <mat-form-field *ngIf="briansShip" class="numberinput">
-    <input type="number" matInput placeholder="Month No" formControlName="monthNo" />
-  </mat-form-field>
-
+  <div [hidden]="!briansShip">
+    <mat-form-field class="numberinput">
+      <input type="number" matInput placeholder="Pilot No" formControlName="pilotNo" />
+    </mat-form-field>
+    <mat-form-field class="numberinput">
+      <input type="number" matInput placeholder="Month No" formControlName="monthNo" />
+    </mat-form-field>
+  </div>
   <mat-form-field>
     <input type="text" matInput placeholder="Car" formControlName="car" />
   </mat-form-field>

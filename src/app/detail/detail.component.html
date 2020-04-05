@@ -101,16 +101,16 @@
 
     <!-- Information only for the Pilot of the ship -->
     <div fxLayout="row" fxLayout.lt-sm="column">
-      <div fxFlex="40" fxFlexOffset="7" fxLayoutGap="10px" class="trip-particulars">
-        <h3 *ngIf="ownInwardTrip">Inward Trip Pilots Own Info</h3>
-        <app-trip-info-own *ngIf="ownInwardTrip" [trip]="inward" [visitdocId]="visitdocId"
+      <div [hidden]="ownInwardTrip" fxFlex="40" fxFlexOffset="7" fxLayoutGap="10px" class="trip-particulars"></div>
+      <div [hidden]="!ownInwardTrip" fxFlex="40" fxFlexOffset="7" fxLayoutGap="10px" class="trip-particulars">
+        <h3>Inward Trip Pilots Own Info</h3>
+        <app-trip-info-own [trip]="inward" [visitdocId]="visitdocId"
           (formReady)="formInitialized('ownInwardTrip', $event)" (confirming)="confirmIn($event)">
         </app-trip-info-own>
       </div>
-
-      <div fxFlex="40" fxFlexOffset="7" fxLayoutGap="10px" class="trip-particulars">
-        <h3 *ngIf="ownOutwardTrip">Outward Trip Pilots Own Info</h3>
-        <app-trip-info-own *ngIf="ownOutwardTrip" [trip]="outward" [visitdocId]="visitdocId"
+      <div [hidden]="!ownOutwardTrip" fxFlex="40" fxFlexOffset="7" fxLayoutGap="10px" class="trip-particulars">
+        <h3>Outward Trip Pilots Own Info</h3>
+        <app-trip-info-own [trip]="outward" [visitdocId]="visitdocId"
           (formReady)="formInitialized('ownOutwardTrip', $event)" (confirming)="confirmOut($event)">
         </app-trip-info-own>
       </div>

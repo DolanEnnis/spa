@@ -130,7 +130,6 @@ export class VisitService implements OnInit, OnDestroy {
       berth: info.berth,
       updatedBy: this.message,
     }),
-
       this.db
         .collection('visits')
         .doc(docRef)
@@ -140,7 +139,6 @@ export class VisitService implements OnInit, OnDestroy {
   }
 
   updateConfirmed(docRef, tripDirection, trip) {
-    console.log(trip)
     this.chargesService.addChargeToDatabase(trip);
     if (tripDirection == "i") {
       this.db

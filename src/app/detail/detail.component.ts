@@ -151,7 +151,7 @@ export class DetailComponent implements OnInit, OnDestroy {
     this.submitting();
     const info = this.shipForm.value;
     this.trip.boarding = (info.outward.boarding);
-    if (this.trip.boarding == null) { }
+    //if (this.trip.boarding == null) { }
     this.trip.typeTrip = "Out";
     this.trip.extra = info.outward.extra;
     this.trip.pilot = info.outward.pilot;
@@ -182,6 +182,7 @@ export class DetailComponent implements OnInit, OnDestroy {
     this.setFlag()
   }
 
+  //TODO Stop flag when date and time is changed 
   setFlag() {
     var newEta = this.visitService.combineTime(this.shipForm.value.eta, this.shipForm.value.etaTime)
     if (this.shipForm.value.status === "Due" && newEta.valueOf() / 1000 < this.visitService.today) {
@@ -206,7 +207,7 @@ export class DetailComponent implements OnInit, OnDestroy {
     this.ownInwardTrip = this.inward.pilot == this.patron.displayName ||
       (this.inward.pilot == "Fergal" && this.patron.displayName == "Brian");
     this.ownOutwardTrip = this.outward.pilot == this.patron.displayName ||
-      (this.outward.pilot == "Fergal" && this.patron.displayName == "Brian");;
+      (this.outward.pilot == "Fergal" && this.patron.displayName == "Brian");
   }
 
 
