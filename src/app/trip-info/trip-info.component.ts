@@ -69,7 +69,6 @@ export class TripInfoComponent implements OnInit, OnChanges {
       pilot: [this.trip.pilot],
       port: [this.trip.port],
     });
-
     this.boarding = moment(this.getBoarding(this.trip.boarding))
     this.formReady.emit(this.tripForm);
   }
@@ -105,6 +104,17 @@ export class TripInfoComponent implements OnInit, OnChanges {
         else { this.flag = false }
       }
       else { this.flag = false }
+    }
+  }
+
+
+  changeTime(event) {
+    if ((!this.tripForm.value.boarding) || (!this.tripForm.value.boardingTime)) {
+      this.flag = false //Red warning does not come up until both date and time set!
+    }
+    else {
+      var newTime = this.visitService.combineTime(this.tripForm.value.boarding, this.tripForm.value.boardingTime)
+      this.setFlag(moment(newTime), this.status)
     }
   }
 

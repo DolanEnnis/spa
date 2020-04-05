@@ -182,7 +182,7 @@ export class DetailComponent implements OnInit, OnDestroy {
     this.setFlag()
   }
 
-  //TODO Stop flag when date and time is changed 
+
   setFlag() {
     var newEta = this.visitService.combineTime(this.shipForm.value.eta, this.shipForm.value.etaTime)
     if (this.shipForm.value.status === "Due" && newEta.valueOf() / 1000 < this.visitService.today) {

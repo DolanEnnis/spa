@@ -45,7 +45,6 @@ export class TripInfoOwnComponent implements OnInit {
     }
   }
 
-  //TODO confirming outward trip effecting inward trip
   confirm(): void {
     this.confirming.emit(this.trip.typeTrip);
   }
