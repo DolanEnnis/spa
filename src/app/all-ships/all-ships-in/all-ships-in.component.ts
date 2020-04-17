@@ -3,10 +3,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Router } from '@angular/router';
-import { now } from 'moment';
 
 import { VisitService } from '../../services/visit.service';
-import { Visit } from '../../shared/visit.model';
 import { ViewInfo } from '../../shared/view.model';
 
 

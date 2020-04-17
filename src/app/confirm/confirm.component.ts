@@ -1,9 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-/* import {
-  FormGroup,
-  Validators,
-  FormBuilder,
-} from '@angular/forms'; */
 import { Location, formatDate } from '@angular/common';
 import { Subscription, Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -33,19 +28,14 @@ export class ConfirmComponent implements OnInit, OnDestroy {
   public updated = new Date();
   public updatedBy;
   private patron: Patron;
-  //tripForm: FormGroup;
   trip: Charge = { ship: "" };
-  // ship: string;
   ownTrip: boolean;
   tripDirection: string;
-  //public confirmed: boolean;
   dateError: boolean;
 
   constructor(
-    //private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    //private db: AngularFirestore,
     private visitService: VisitService,
     private authService: AuthService,
     private _location: Location,
@@ -63,32 +53,6 @@ export class ConfirmComponent implements OnInit, OnDestroy {
   ngOnInit() {
     console.log(this.trip.boarding)
     this.patron = this.authService.getUser();
-    /* this.subs.push(
-      this.visitService.currentVisit$.subscribe(d => {
-
-        //this.trip.ship = d.ship;
-        //this.trip.gt = d.gt;
-        /*         if (this.tripDirection == 'i') {
-                  //INWARD TRIP
-                  this.trip.boarding = this.visitService.getBoarded(d.inward.boarding);
-                  this.trip.typeTrip = "Inward";
-                  this.trip.extra = d.inward.extra;
-                  this.trip.pilot = d.inward.pilot;
-                  this.trip.port = d.inward.port;
-                  this.confirmed = d.inwardConfirmed;
-                }
-                else {
-                  //OUTWARD TRIP
-                  this.trip.boarding = this.visitService.getBoarded(d.outward.boarding);
-                  this.trip.typeTrip = "Outward";
-                  this.trip.extra = d.outward.extra;
-                  this.trip.note = d.outward.note;
-                  this.trip.pilot = d.outward.pilot;
-                  this.trip.port = d.outward.port;
-                  this.confirmed = d.outwardConfirmed;
-                }
-
-      })); */
     this.trip.berthing = this.ratesService.berthing(this.trip.gt, this.trip.port);
     this.trip.pilotageCharge = this.ratesService.pilotCharge(this.trip.gt, this.trip.port);
     this.trip.incidental = this.ratesService.incidental;

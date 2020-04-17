@@ -17,8 +17,7 @@ import { Visit } from '../../shared/visit.model';
 import { AuthService } from '../../auth/auth.service';
 import { Patron } from '../../shared/patron.model';
 import { ViewInfo } from '../../shared/view.model'
-//import { now } from 'moment';
-//import { Timestamp } from 'rxjs/internal/operators/timestamp';
+
 
 @Component({
   selector: 'app-pilot',
@@ -41,7 +40,6 @@ export class PilotComponent implements OnInit, AfterViewInit, OnDestroy {
   private tpChangedSubscription: Subscription;
   private loggedinUserID: string;
   private patron: Patron;
-  // private pilotVisit: any;
   private today: number;
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;
@@ -119,17 +117,6 @@ export class PilotComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  /*   getTextColor(row: Visit) {
-      return 'Red';
-    } */
-
-  /*   getBoarded(boarding, eta) {
-      if (boarding == null) {
-        const sudoDate = Date.now() + 946080000; //If a boarding date is not fixed this makes a date 30 odd year in the future
-        return sudoDate;
-      }
-      return boarding.seconds;
-    } */
 
   handleRowClick(row: ViewInfo) {
     this.visitService.changecurrentVisit(row.visit);

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { map } from 'rxjs/operators';
+//import { map } from 'rxjs/operators';
 
 import { AuthService } from '../auth.service';
 import { UIService } from '../../services/ui.service';
@@ -18,20 +18,15 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   isLoading$: Observable<boolean>;
 
-  private loadingSubs: Subscription;
+  //private loadingSubs: Subscription;
 
   constructor(
     private authService: AuthService,
-    private uiService: UIService,
-    private store: Store<{ ui: fromApp.State }>,
+    //private uiService: UIService,
+    // private store: Store<{ ui: fromApp.State }>,
   ) { }
 
   ngOnInit() {
-    //this.isLoading$ = this.store.pipe(map(state => state.ui.isLoading));
-    //this.isLoading$ = this.store.map(state => state.ui.isLoading);
-    // this.loadingSubs = this.uiService.loadingStateChanged.subscribe(isLoading =>
-    // {this.isLoading = isLoading;
-    // });
     this.loginForm = new FormGroup({
       email: new FormControl('', {
         validators: [Validators.required, Validators.email]
@@ -46,10 +41,5 @@ export class LoginComponent implements OnInit {
       password: this.loginForm.value.password,
     })
   }
-
-  // ngOnDestroy(){
-  //   if (this.loadingSubs){
-  //   this.loadingSubs.unsubscribe();}
-  // }
 
 }

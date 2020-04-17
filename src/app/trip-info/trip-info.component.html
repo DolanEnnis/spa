@@ -20,12 +20,7 @@ Goes into Detail Page twice for inward and outward trips
     </mat-form-field>
 
   </div>
-  <!-- <mat-form-field>
-    <input (dateTimeChange)="setupFlag($event)" [owlDateTime]="dt" [owlDateTimeTrigger]="dt" type="boarding" matInput
-      placeholder="Boarding" formControlName="boarding">
-    <owl-date-time #dt></owl-date-time>
-    <div class="flag" *ngIf="flag">Vessel Still {{status}}?</div>
-  </mat-form-field> -->
+
   <mat-form-field class="numberinput">
     <mat-select (selectionChange)="changePilot($event)" formControlName="pilot" placeholder="Pilot" name="pilot">
       <mat-option *ngFor="let pilot of pilots" [value]="pilot.value">

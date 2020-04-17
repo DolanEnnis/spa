@@ -1,14 +1,12 @@
 import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Observable, Subscription } from 'rxjs';
-import { DateTimeAdapter } from 'ng-pick-datetime';
+import { Subscription } from 'rxjs';
+//import { DateTimeAdapter } from 'ng-pick-datetime';
 
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-
-//import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 
 import { VisitService } from '../services/visit.service';
 import { ValidateUrl } from '../shared/marineTraffic.validator';
@@ -16,7 +14,6 @@ import { Router } from '@angular/router';
 
 import { Visit } from '../shared/visit.model'
 
-//import { default as _rollupMoment } from 'moment';
 import * as _moment from 'moment';
 const moment = _moment;
 
@@ -53,19 +50,13 @@ export class NewVisitComponent implements OnInit, AfterViewInit, OnDestroy {
     { value: 'Other', viewValue: 'Other' },
   ];
 
-  //displayedColumns = ['eta', 'ship', 'gt', 'port'];
-  //dataSource = new MatTableModule;
   private tpChangedSubscription: Subscription;
   private vesselSubscription: Subscription
   ship: string;
   error: string;
   private reg: string = '[https://www.marinetraffic.com/en/ais/details/ships/shipid]';
 
-  /* @ViewChild(MatSortModule, { static: false }) sort: MatSortModule;
-  @ViewChild(MatPaginatorModule, { static: false }) paginator: MatPaginatorModule; */
-
   displayedColumns = ['eta', 'ship', 'gt', 'port'];
-
   dataSource = new MatTableDataSource();
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;

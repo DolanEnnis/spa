@@ -1,12 +1,9 @@
-import { Injectable, OnInit, OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import {
   AngularFirestore,
-  AngularFirestoreDocument,
 } from 'angularfire2/firestore';
-
-
-import { Subject, Observable, Subscription, BehaviorSubject } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Subject, Subscription, } from 'rxjs';
+//import { ActivatedRoute, Router } from '@angular/router';
 import { Charge } from '../shared/submittedTrip.model';
 
 @Injectable()

@@ -1,4 +1,4 @@
-import { Injectable, OnInit, OnDestroy } from '@angular/core'; //left out Input
+import { Injectable, OnDestroy } from '@angular/core'; //left out Input
 import {
   AngularFirestore,
   AngularFirestoreDocument,
@@ -14,16 +14,12 @@ import { DataService } from './data.service';
 import { ChargesService } from './charges.service'
 
 import { Visit } from '../shared/visit.model';
-//import { Trip } from '../shared/trip.model';
-//import { Charge } from '../shared/submittedTrip.model';
-//import { error } from 'util';
-//import { filter } from 'rxjs/operators';
 import * as moment from 'moment';
 import { Charge } from '../shared/submittedTrip.model';
 
 
 @Injectable()
-export class VisitService implements OnInit, OnDestroy {
+export class VisitService implements OnDestroy {
   private fbSubs: Subscription[] = []; //List of subscriptions to Firebase
   allTripsChanged = new Subject<Visit[]>();
   public visit: Visit;
@@ -54,9 +50,9 @@ export class VisitService implements OnInit, OnDestroy {
 
   }
 
-  ngOnInit() {
-
-  }
+  /*   ngOnInit() {
+  
+    } */
 
 
   fetchVisits() {

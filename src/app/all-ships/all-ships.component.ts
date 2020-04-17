@@ -1,17 +1,11 @@
 // This shows the "Previous" Page
 
-import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+//import { MatPaginator } from '@angular/material/paginator';
+//import { MatSort } from '@angular/material/sort';
 import { Subscription } from 'rxjs';
-//import { Router } from '@angular/router';
-//import { now } from 'moment';
 
-//import { AngularFirestore } from 'angularfire2/firestore';
-//import { Subject } from 'rxjs/Subject';
-
-//import { AuthService } from '../auth/auth.service';
 import { VisitService } from '../services/visit.service';
 import { Visit } from '../shared/visit.model'
 import { ViewInfo } from '../shared/view.model'
@@ -27,20 +21,15 @@ export class AllShipsComponent implements OnInit, OnDestroy {
   dataSourceIn = new MatTableDataSource<ViewInfo>();
   dataSourceOut = new MatTableDataSource<ViewInfo>();
   private tpChangedSubscription: Subscription;
-  //private today: number;
   in: string;
   out: string;
   message: string; //Who is logged on?
   isUserPilot: boolean;
   pilots = ['Fergal', 'Brian', 'Peter', 'Fintan', 'Mark', 'Dave', 'Paddy', 'Cyril']
-  //private loggedinUserID: string;
-
 
   constructor(
-    //private authService: AuthService,
     private visitService: VisitService,
     private data: DataService
-    // private router: Router
   ) { }
 
 
@@ -52,7 +41,6 @@ export class AllShipsComponent implements OnInit, OnDestroy {
     })();
     this.out = "out";
     this.in = "in";
-    //this.today = now() / 1000;
     this.tpChangedSubscription = this.visitService.allTripsChanged.subscribe(
       (visits: Visit[]) => {
         const inwardInfo: ViewInfo[] = visits

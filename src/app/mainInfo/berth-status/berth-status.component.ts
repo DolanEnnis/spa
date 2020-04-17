@@ -1,10 +1,7 @@
 import { Component, ViewChild, Input, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-//import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
-//import { AngularFirestore } from 'angularfire2/firestore';
-//import { Subject } from 'rxjs/Subject';
 import { now } from 'moment';
 
 import { VisitService } from '../../services/visit.service';

@@ -70,7 +70,6 @@ export class ChargesComponent implements OnInit, OnDestroy {
         this.myTable.setSort([
           { column: "ship", dir: "asc" },
           { column: "boardStamp", dir: "desc", }, //sort by this first 
-          // { column: "ship", dir: "asc" }, then sort by this second
         ]);
       });
     this.fetchVisits()

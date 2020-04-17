@@ -1,9 +1,9 @@
-import { Component, Output, EventEmitter, ViewChild, Input, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, ViewChild, Input, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
-import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { AngularFirestore, } from 'angularfire2/firestore';
 import { Subject } from 'rxjs/Subject';
 
 import { VisitService } from '../../services/visit.service';
@@ -23,18 +23,14 @@ export class StatusListComponent implements OnInit, AfterViewInit, OnDestroy {
   allTripsChanged = new Subject<Visit[]>();
   displayedColumns = ['ship', 'officeTime', 'port', 'note', 'pilot', 'updated', 'mt'];
   dataSource = new MatTableDataSource<Visit>();
-  //myVisits: [any];
   private tpChangedSubscription: Subscription;
-  private loggedinUserID: any;
-  //private today = this.visitService.today
-
+  //private loggedinUserID: any;
 
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   constructor(private visitService: VisitService,
     private router: Router,
     private db: AngularFirestore,
-    // private dataService: DataService
   ) { }
 
 
@@ -42,7 +38,6 @@ export class StatusListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.tpChangedSubscription = this.allTripsChanged.subscribe(
       (visits: Visit[]) => {
         for (let i = 0; i < visits.length; i++) {
-          //this.visitService.getUserData((visits[i].updateUser))
           if (visits[i].status == "Alongside") {
             visits[i].berth = visits[i].outward.port
             visits[i].note = visits[i].outward.note

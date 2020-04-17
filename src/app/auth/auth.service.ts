@@ -9,8 +9,6 @@ import 'rxjs/add/operator/switchMap'
 import { Observable } from 'rxjs/Observable';
 import { DataService } from "../services/data.service";
 
-
-//import { User } from './user.model';
 import { AuthData } from './auth-data.model';
 import { UIService } from '../services/ui.service';
 import * as fromApp from '../app.reducer';
@@ -75,7 +73,6 @@ export class AuthService implements OnInit {
         }
         console.log(this.newPatron);
         this.afs.collection('users').add(this.newPatron);
-        // this.updateUserData(credential.user);
         this.store.dispatch({ type: 'STOP_LOADING' });
       })
       .catch(error => {
@@ -87,7 +84,6 @@ export class AuthService implements OnInit {
 
   login(authData: AuthData) {
     this.store.dispatch({ type: 'START_LOADING' });
-    //this.uiService.loadingStateChanged.next(true);
     this.afAuth.auth
       .signInWithEmailAndPassword(authData.email, authData.password)
       .then((returneddata) => {

@@ -1,6 +1,6 @@
 // Used for each port in Office View
 
-import { Component, Input, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
@@ -19,7 +19,7 @@ export class BerthComponent implements OnInit {
   @Input('tripsDue$') tripsDue$: Observable<Visit[]>;
   @Input('tripsWaiting$') tripsWaiting$: Observable<Visit[]>;
   @Input('tripsAlongside$') tripsAlongside$: Observable<Visit[]>;
-  //displayedColumns = ['ship', 'gt', 'officeTime', 'note', 'pilot'];
+
   dataSourceDue = new MatTableDataSource<ViewInfo>();
   dataSourceWait = new MatTableDataSource<Visit>();
   dataSourceAlong = new MatTableDataSource<Visit>();

@@ -1,21 +1,16 @@
 import {
   Component,
   OnInit,
-  AfterViewInit,
   OnDestroy,
-  ViewChild,
 } from '@angular/core';
 import { Location } from '@angular/common';
 import {
   FormGroup,
-  FormControl,
   Validators,
   FormBuilder,
-  NgForm,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
-  AngularFirestore,
   AngularFirestoreDocument,
 } from 'angularfire2/firestore';
 
@@ -31,7 +26,7 @@ import { ValidateUrl } from '../shared/marineTraffic.validator';
 import * as _moment from 'moment';
 import { Charge } from '../shared/submittedTrip.model';
 import { DataService } from '../services/data.service';
-//import { toDate } from '@angular/common/src/i18n/format_date';
+
 const moment = _moment;
 
 @Component({
@@ -44,7 +39,6 @@ export class DetailComponent implements OnInit, OnDestroy {
   visitDoc: AngularFirestoreDocument<Visit>;
   currentVisit: Observable<any>;
   private subs: Subscription[] = [];
-  //subscription: Subscription;
   shipForm: FormGroup;
   public updated = new Date();
   public updatedBy;
@@ -151,7 +145,6 @@ export class DetailComponent implements OnInit, OnDestroy {
     this.submitting();
     const info = this.shipForm.value;
     this.trip.boarding = (info.outward.boarding);
-    //if (this.trip.boarding == null) { }
     this.trip.typeTrip = "Out";
     this.trip.extra = info.outward.extra;
     this.trip.pilot = info.outward.pilot;
