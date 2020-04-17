@@ -1,5 +1,6 @@
 import { Component, Output, EventEmitter, ViewChild, Input, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
-import { MatTableDataSource, MatSort } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
@@ -7,8 +8,7 @@ import { Subject } from 'rxjs/Subject';
 
 import { VisitService } from '../../services/visit.service';
 import { Visit } from '../../shared/visit.model'
-/* import { AuthService } from '../../auth/auth.service';
-import { DataService } from "../../shared/data.service"; */
+
 
 @Component({
   selector: 'app-status-list',

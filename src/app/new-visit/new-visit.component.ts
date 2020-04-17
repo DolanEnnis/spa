@@ -1,9 +1,14 @@
 import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { DateTimeAdapter } from 'ng-pick-datetime';
+
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+
+//import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 
 import { VisitService } from '../services/visit.service';
 import { ValidateUrl } from '../shared/marineTraffic.validator';
@@ -26,6 +31,8 @@ export class NewVisitComponent implements OnInit, AfterViewInit, OnDestroy {
   public eta = moment();
 
 
+
+
   ports = [
     { value: 'Anchorage', viewValue: 'Anchorage' },
     { value: 'Cappa', viewValue: 'Cappa' },
@@ -46,16 +53,25 @@ export class NewVisitComponent implements OnInit, AfterViewInit, OnDestroy {
     { value: 'Other', viewValue: 'Other' },
   ];
 
-  displayedColumns = ['eta', 'ship', 'gt', 'port'];
-  dataSource = new MatTableDataSource<Visit>();
+  //displayedColumns = ['eta', 'ship', 'gt', 'port'];
+  //dataSource = new MatTableModule;
   private tpChangedSubscription: Subscription;
   private vesselSubscription: Subscription
   ship: string;
   error: string;
   private reg: string = '[https://www.marinetraffic.com/en/ais/details/ships/shipid]';
 
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  /* @ViewChild(MatSortModule, { static: false }) sort: MatSortModule;
+  @ViewChild(MatPaginatorModule, { static: false }) paginator: MatPaginatorModule; */
+
+  displayedColumns = ['eta', 'ship', 'gt', 'port'];
+
+  dataSource = new MatTableDataSource();
+
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+
+
 
   constructor(private visitService: VisitService,
     private router: Router) {
@@ -75,12 +91,15 @@ export class NewVisitComponent implements OnInit, AfterViewInit, OnDestroy {
     });
     this.tpChangedSubscription = this.visitService.allTripsChanged.subscribe(
       (visits: Visit[]) => {
-        this.dataSource.data = visits;
+        this.dataSource.data = visits;;
       });
     this.visitService.fetchVisits();
   }
 
-
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
 
   onSubmit() {
     this.visitService.setNewVisit(this.newShipForm.value);
@@ -88,10 +107,6 @@ export class NewVisitComponent implements OnInit, AfterViewInit, OnDestroy {
     this.router.navigate(['/']);
   }
 
-  ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-  }
 
   doFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();

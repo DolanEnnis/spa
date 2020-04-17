@@ -69,7 +69,7 @@
   <!-- Start of Previous visit listing -->
   <div fxFlexOffset="10" fxFlex="60" fxLayoutGap="10px">
     <a href="http://www.cargopro.ie/sfpc/download/rpt_daydiary.pdf" target="_blank">Open Day Diary</a>
-    <mat-table [dataSource]="dataSource" matSort matSortActive="ship" matSortDirection="desc">
+    <mat-table [dataSource]="dataSource" matSort matSortActive="eta" matSortDirection="desc">
 
       <ng-container matColumnDef="eta">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Date</mat-header-cell>

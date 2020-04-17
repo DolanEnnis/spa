@@ -1,7 +1,7 @@
 // Used for each port in Office View
 
 import { Component, Input, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
-import { MatTableDataSource, MatSort } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 

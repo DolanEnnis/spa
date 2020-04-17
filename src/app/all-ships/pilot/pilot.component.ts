@@ -5,7 +5,9 @@ import {
   AfterViewInit,
   OnDestroy,
 } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { Router } from '@angular/router';
